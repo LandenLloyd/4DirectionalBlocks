@@ -9,7 +9,7 @@ We are planning on making a spin off of Tetris.
 
 ## If you plan to collaborate with one or two classmates, what are their names?
 
-Rob Buaev, Landen Lloyd, Kristin Wieland
+Rob Butaev, Landen Lloyd, Kristin Wieland
 
 ## Do you have any questions of your own?
 
