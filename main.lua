@@ -8,8 +8,8 @@ require 'Util'
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
 
-VIRTUAL_WIDTH = 432
-VIRTUAL_HEIGHT = 243
+VIRTUAL_WIDTH = 80
+VIRTUAL_HEIGHT = 45
 
 local score = 0
 local scoreDisplay = score
@@ -30,6 +30,21 @@ function love.load()
 
     }
 
+    fonts = {
+
+    }
+
+    -- A table for storing the position of the current tetrimino
+    tetriminoTable = {
+        --Below are two example entries, I added color because Tetris is multi-color
+        {x=2,y=4,color='blue'}, -- access this item with tetriminoTable[1]
+        {x=3,y=5,color='red'}
+    }
+
+    centerBlockTable = {
+        -- Uses same format as tetriminoTable
+    }
+
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
         fullscreen = false,
         resizable = true,
@@ -37,8 +52,8 @@ function love.load()
     })
 
     util = Util()
-    centerBlock = CenterBlock(util, parameters)
-    tetriminoManager = TetriminoManager(util, parameters)
+    centerBlock = CenterBlock(util, centerBlockTable, tetriminoTable)
+    tetriminoManager = TetriminoManager(util, centerBlockTable, tetriminoTable)
 
     gameState = 'start'
 end
@@ -87,7 +102,7 @@ function love.keypressed(key)
     if key == 'escape' then
         gameState = 'pause'
     end
-    
+
     --Possible bug here at the end of gmae
     if (key == 'enter' or key == 'return') and gameState == 'pause' then
         gameState = 'play'
@@ -96,6 +111,9 @@ function love.keypressed(key)
 end
 
 function love.draw()
+
+    push:apply('start')
+
     if gameState == 'start' then
         --Draw start messge
     elseif gameState == 'play' then
@@ -106,4 +124,7 @@ function love.draw()
     elseif gameState == 'end' then
         --Display end message
     end
+
+    push:apple('end')
+
 end
