@@ -37,8 +37,10 @@ function love.load()
     -- A table for storing the position of the current tetrimino
     tetriminoTable = {
         --Below are two example entries, I added color because Tetris is multi-color
-        {x=2,y=4,color='blue'}, -- access this item with tetriminoTable[1]
-        {x=3,y=5,color='red'}
+        --The first digit is the x coordinate, the second is the y coordinate
+        ["2 2"] = 'blue', -- access this item with tetriminoTable[1]
+        ["4 5"] = 'red',
+        ["3 3"] = nil --Do this if you need to delete a value
     }
 
     centerBlockTable = {
