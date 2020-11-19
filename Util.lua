@@ -24,7 +24,7 @@ function Util:mergeTables(table1, table2)
     --note that duplicates keys in table2 override table1 values
     --Only works for tables with keys other than positional keys
 
-    table3 = {}
+    local table3 = {}
 
     for key, value in pairs(table1) do
         table3[key] = value
@@ -38,13 +38,44 @@ function Util:mergeTables(table1, table2)
 end
 
 function Util:adjacentElements(table1, table2)
-    -- Used for collision checking, where the keys
+    -- Used for collision checking, where the keys are 1D arrays
+    -- Returns true is there is a collision, false otherwise
 
+    -- We want the most performance efficient table
+    local checkingTable, otherTable
     if #table1 < #table2 then
-        splittingTable = table1
+        checkingTable = table1
+        otherTable = table2
     else
-        splittingTable = table2
+        checkingTable = table2
+        otherTable = table1
     end
 
-    --To Be Continued
+    local minCoord = 0
+    local maxCoord = VIRTUAL_WIDTH * VIRTUAL_HEIGHT - 1
+
+    local left, right, up, down
+
+    for key, value in pairs(checkingTable) do
+        -- Here we check for adjacencies, by iterating through each key in splittingTable
+        -- and checking the coords and the four adjacent coords
+
+        if otherTable[key] ~= nil then return true end
+
+        if key - 1 < minCoord then left = key else left = key - 1 end
+        if otherTable[left] ~= nil then return true end
+
+        if key + 1 > maxCoord then right = key else right = key + 1 end
+        if otherTable[right] ~= nil then return true end
+
+        if key - 80 < minCoord then up = key else up = key - 80 end
+        if otherTable[up] ~= nil then return true end
+
+        if key + 80 > maxCoord then down = key else down = key + 80 end
+        if otherTable[down] ~= nil then return true end
+
+    end
+
+    -- If we make it past the for loop then no adjacencies detected
+    return false
 end
