@@ -8,11 +8,14 @@ require 'Util'
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
 
-VIRTUAL_WIDTH = 80
-VIRTUAL_HEIGHT = 45
+VIRTUAL_WIDTH = 320
+VIRTUAL_HEIGHT = 180
 
+-- Because score is based on time which is often fractional,
+-- we dispaly a second variable that is certainly an integer
 local score = 0
 local scoreDisplay = score
+
 local timeElapsed = 0
 local gameSpeed = 1
 
@@ -23,15 +26,15 @@ function love.load()
     love.window.setTitle('4D-Block-Organizer')
 
     fonts = {
-
+        --Note that these font sizes should not be final
+        ['titleFont'] = love.graphics.newFont('assets/titleFont.ttf', 8)
+        ['scoreFont'] = love.graphics.newFont('assets/scoreFont.ttf', 8)
     }
+
+    love.graphics.setFont(fonts['titleFont'])
 
     sounds = {
-
-    }
-
-    fonts = {
-
+        ['backgroundMusic'] = love.audio.newSource('assets/backgroundMusic.wav', 'staic')
     }
 
     -- A table for storing the position of the current tetrimino
@@ -59,6 +62,9 @@ function love.load()
     tetriminoManager = TetriminoManager(util, centerBlockTable, tetriminoTable)
 
     gameState = 'start'
+
+    sounds['backgroundMusic']:setLooping(true)
+    sounds['backgroundMusic']:play()
 end
 
 function love.resize(w, h)
@@ -68,8 +74,10 @@ end
 function love.update(dt)
     timeElapsed = timeElapsed + dt
 
-    if gameState ~= 'pause' then
-        --Play backgroudn music
+    if gameState == 'pause' then
+        sounds['backgroundMusic']:pause()
+    else
+        sounds['backgroundMusic']:play()
     end
 
     if timeElapsed > gameSpeed then
@@ -102,11 +110,12 @@ function love.update(dt)
 end
 
 function love.keypressed(key)
-    if key == 'escape' then
-        gameState = 'pause'
+    if gameState ~= 'end' then
+        if key == 'escape' and gameState ~= 'pause' then
+            gameState = 'pause'
+        end
     end
 
-    --Possible bug here at the end of gmae
     if (key == 'enter' or key == 'return') and gameState == 'pause' then
         gameState = 'play'
     end
@@ -118,16 +127,25 @@ function love.draw()
     push:apply('start')
 
     if gameState == 'start' then
-        --Draw start messge
+        love.graphics.setFont(fonts['titleFont'])
+        love.graphics.printf('Welcome To 4D Block Organizer!', 0, 10, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf('Press Enter Or Return To Start!', 0, 20, VIRTUAL_WIDTH, 'center')
     elseif gameState == 'play' then
         centerBlock:render()
+        love.graphics.setFont('scoreFont')
+        love.graphics.printf(tostring(displayScore), 0, 5, VIRTUAL_WIDTH, 'left')
         tetriminoManager:render()
     elseif gameState == 'pause' then
-        --Display pause message
+        love.graphics.setFont('titleFont')
+        love.graphics.printf('The Game Is Paused, You Are Safe', 0, 10, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf('Press Enter Or Return To Resume!', 0, 20, VIRTUAL_WIDTH, 'center')
     elseif gameState == 'end' then
-        --Display end message
+        love.graphics.setFont('titleFont')
+        love.graphics.printf('Game Over!', 0, 10, VIRTUAL_WIDTH, 'center')
+        love.graphics.setFont('scoreFont')
+        love.graphics.printf('Score: ' .. tostring(displayScore), 0, 20, VIRTUAL_WIDTH, 'center')
     end
 
-    push:apple('end')
+    push:apply('end')
 
 end
