@@ -27,7 +27,7 @@ function CenterBlock:left()
     self.dx = self.dx - self.width
 end
 
-function CenterBlock:left()
+function CenterBlock:right()
     self.dx = self.dx + self.width
 end
 
