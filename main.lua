@@ -27,7 +27,7 @@ function love.load()
 
     fonts = {
         --Note that these font sizes should not be final
-        ['titleFont'] = love.graphics.newFont('assets/titleFont.ttf', 8)
+        ['titleFont'] = love.graphics.newFont('assets/titleFont.ttf', 8),
         ['scoreFont'] = love.graphics.newFont('assets/scoreFont.ttf', 8)
     }
 
