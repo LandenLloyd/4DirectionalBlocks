@@ -27,14 +27,14 @@ function love.load()
 
     fonts = {
         --Note that these font sizes should not be final
-        ['titleFont'] = love.graphics.newFont('assets/titleFont.ttf', 8),
-        ['scoreFont'] = love.graphics.newFont('assets/scoreFont.ttf', 8)
+        --['titleFont'] = love.graphics.newFont('assets/titleFont.ttf', 8),
+        --['scoreFont'] = love.graphics.newFont('assets/scoreFont.ttf', 8)
     }
 
-    love.graphics.setFont(fonts['titleFont'])
+    --love.graphics.setFont(fonts['titleFont'])
 
     sounds = {
-        ['backgroundMusic'] = love.audio.newSource('assets/backgroundMusic.wav', 'staic')
+        --['backgroundMusic'] = love.audio.newSource('assets/backgroundMusic.wav', 'staic')
     }
 
     -- A table for storing the position of the current tetrimino
@@ -42,9 +42,9 @@ function love.load()
         --Below are two example entries, I added color because Tetris is multi-color
         --The first digit is the x coordinate, the second is the y coordinate
         --Use Util functions to swap between 2D and 1D coords
-        [100] = 'blue', -- access this item with tetriminoTable[1]
-        [137] = 'red',
-        [124] = nil --Do this if you need to delete a value
+        --[100] = 'blue', -- access this item with tetriminoTable[1]
+        --[137] = 'red',
+        --[124] = nil --Do this if you need to delete a value
     }
 
     centerBlockTable = {
@@ -63,8 +63,8 @@ function love.load()
 
     gameState = 'start'
 
-    sounds['backgroundMusic']:setLooping(true)
-    sounds['backgroundMusic']:play()
+    --sounds['backgroundMusic']:setLooping(true)
+    --sounds['backgroundMusic']:play()
 end
 
 function love.resize(w, h)
@@ -75,9 +75,9 @@ function love.update(dt)
     timeElapsed = timeElapsed + dt
 
     if gameState == 'pause' then
-        sounds['backgroundMusic']:pause()
+        --sounds['backgroundMusic']:pause()
     else
-        sounds['backgroundMusic']:play()
+        --sounds['backgroundMusic']:play()
     end
 
     if timeElapsed > gameSpeed then
@@ -88,7 +88,7 @@ function love.update(dt)
             score = score + dt
             scoreDisplay = math.floor(score)
 
-            centerBlock:update(dt)
+            --centerBlock:update(dt)
             tetriminoManager:update(dt)
 
             -- Player controls for center block
@@ -110,13 +110,16 @@ function love.update(dt)
 end
 
 function love.keypressed(key)
+    if key == 'escape' then
+        love.event.quit()
+    end 
     if gameState ~= 'end' then
         if key == 'escape' and gameState ~= 'pause' then
             gameState = 'pause'
         end
     end
 
-    if (key == 'enter' or key == 'return') and gameState == 'pause' then
+    if (key == 'enter' or key == 'return') and gameState == 'start' then
         gameState = 'play'
     end
 
@@ -127,13 +130,13 @@ function love.draw()
     push:apply('start')
 
     if gameState == 'start' then
-        love.graphics.setFont(fonts['titleFont'])
+        --love.graphics.setFont(fonts['titleFont'])
         love.graphics.printf('Welcome To 4D Block Organizer!', 0, 10, VIRTUAL_WIDTH, 'center')
         love.graphics.printf('Press Enter Or Return To Start!', 0, 20, VIRTUAL_WIDTH, 'center')
     elseif gameState == 'play' then
-        centerBlock:render()
-        love.graphics.setFont('scoreFont')
-        love.graphics.printf(tostring(displayScore), 0, 5, VIRTUAL_WIDTH, 'left')
+        --centerBlock:render()
+        --love.graphics.setFont('scoreFont')
+        --love.graphics.printf(tostring(displayScore), 0, 5, VIRTUAL_WIDTH, 'left')
         tetriminoManager:render()
     elseif gameState == 'pause' then
         love.graphics.setFont('titleFont')
