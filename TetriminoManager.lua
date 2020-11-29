@@ -91,7 +91,7 @@ end
 
 -- resets tetromino
 function reset()
-    resetSHapeAngle = true
+    resetShapeAngle = true
     side = math.random(1, 4) 
     shape = math.random(1, 7) 
 
@@ -174,9 +174,9 @@ function shapes()
     if shape == 1 then -- 'S' is 1
         -- setting reg color
         love.graphics.setColor(246/255, 0, 0, 1)
-        if resetSHapeAngle == true then
+        if resetShapeAngle == true then
             s = math.random(1, 2) 
-            resetSHapeAngle = false
+            resetShapeAngle = false
         end
 
         if s == 1 then
@@ -199,9 +199,9 @@ function shapes()
     elseif shape == 2 then -- 'Z' is 2
         -- setting dark-orange color
         love.graphics.setColor(255/255, 140/255, 0, 1)
-        if resetSHapeAngle == true then
+        if resetShapeAngle == true then
             z = math.random(1, 2) 
-            resetSHapeAngle = false
+            resetShapeAngle = false
         end
 
         if z == 1 then
@@ -224,9 +224,9 @@ function shapes()
     elseif shape == 3 then -- 'J' is 3
         -- setting canary-yellow color
         love.graphics.setColor(255/255, 238/255, 0, 1)
-        if resetSHapeAngle == true then
+        if resetShapeAngle == true then
             j = math.random(1, 4) 
-            resetSHapeAngle = false
+            resetShapeAngle = false
         end
 
         if j == 1 then
@@ -264,9 +264,9 @@ function shapes()
     elseif shape == 4 then -- 'L' is 4
         -- setting screamin-green color
         love.graphics.setColor(77/255, 233/255, 76/255, 1)
-        if resetSHapeAngle == true then
+        if resetShapeAngle == true then
             l = math.random(1, 4) 
-            resetSHapeAngle = false
+            resetShapeAngle = false
         end
 
         if l == 1 then
@@ -304,9 +304,9 @@ function shapes()
     elseif shape == 5 then -- 'I' is 5
         -- setting brilliant-azure color
         love.graphics.setColor(55/255, 131/255, 255/255, 1)        
-        if resetSHapeAngle == true then
+        if resetShapeAngle == true then
             i = math.random(1, 2) 
-            resetSHapeAngle = false
+            resetShapeAngle = false
         end
         
         if i == 1 then
@@ -339,9 +339,9 @@ function shapes()
     elseif shape == 7 then -- 'T' is 7
         -- setting cyan color
         love.graphics.setColor(0, 255/255, 255/255, 1)
-        if resetSHapeAngle == true then
+        if resetShapeAngle == true then
             t = math.random(1, 4) 
-            resetSHapeAngle = false
+            resetShapeAngle = false
         end
 
         if t == 1 then
