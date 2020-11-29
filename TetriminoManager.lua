@@ -11,12 +11,12 @@ function TetriminoManager:init(util, centerBlockTable, tetriminoTable)
 
     x = 0
     y = VIRTUAL_HEIGHT / 2
-    -- these variables are for kepping track of our velocity on both the 
+    -- these variables are for keeping track of our velocity on both the 
     -- X and Y axis, since the tetrominoes can move in two dimensions
     dx = 100
     dy = math.random(-5, 5)
 
-    -- four side of screen 
+    -- four sides of screen 
     -- 1 is up
     -- 2 is right
     -- 3 is bottom
@@ -33,7 +33,7 @@ function TetriminoManager:init(util, centerBlockTable, tetriminoTable)
     -- 'T' is 7
     shape = 1
 
-    -- this is for reseting shape angle
+    -- this is for resetting shape angle
     resetSHapeAngle = false
 
     -- block is 4x4
