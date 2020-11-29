@@ -1,7 +1,6 @@
 TetriminoManager = Class{}
 
 function TetriminoManager:init(util, centerBlockTable, tetriminoTable)
-
     -- "seed" the RNG so that calls to random are always random
     -- use the current time, since that will vary on startup every time
     math.randomseed(os.time())
@@ -34,20 +33,17 @@ function TetriminoManager:init(util, centerBlockTable, tetriminoTable)
     shape = 1
 
     -- this is for resetting shape angle
-    resetSHapeAngle = false
+    resetShapeAngle = false
 
     -- block is 4x4
     block = 4
 
     -- distance between blocks
-    blockDst = 0.5
-    
+    blockDst = 0.5   
 end
 
 function TetriminoManager:update(dt)
-
     if side == 1 then -- 1 is up
-
         -- if we reach the edge of the screen,
         -- go back to start
         if y > VIRTUAL_HEIGHT - block then
@@ -58,7 +54,6 @@ function TetriminoManager:update(dt)
         end
 
     elseif side == 2 then -- 2 is right
-
         -- if we reach the edge of the screen,
         -- go back to start
         if x < 0 then
@@ -69,7 +64,6 @@ function TetriminoManager:update(dt)
         end
     
     elseif side == 3 then -- 3 is bottom
-
         -- if we reach the edge of the screen,
         -- go back to start
         if y < 0 then
@@ -80,7 +74,6 @@ function TetriminoManager:update(dt)
         end
     
     elseif side == 4 then -- 4 is left
-
         -- if we reach the edge of the screen,
         -- go back to start
         if x > VIRTUAL_WIDTH - block then
@@ -98,11 +91,8 @@ end
 
 -- resets tetromino
 function reset()
-
     resetSHapeAngle = true
-
     side = math.random(1, 4) 
-
     shape = math.random(1, 7) 
 
     if side == 1 then -- 1 is up
@@ -181,12 +171,9 @@ end
 
 -- defining shapes
 function shapes()
-
     if shape == 1 then -- 'S' is 1
-
         -- setting reg color
         love.graphics.setColor(246/255, 0, 0, 1)
-
         if resetSHapeAngle == true then
             s = math.random(1, 2) 
             resetSHapeAngle = false
@@ -210,10 +197,8 @@ function shapes()
         end
 
     elseif shape == 2 then -- 'Z' is 2
-
         -- setting dark-orange color
         love.graphics.setColor(255/255, 140/255, 0, 1)
-
         if resetSHapeAngle == true then
             z = math.random(1, 2) 
             resetSHapeAngle = false
@@ -237,10 +222,8 @@ function shapes()
         end
 
     elseif shape == 3 then -- 'J' is 3
-
         -- setting canary-yellow color
         love.graphics.setColor(255/255, 238/255, 0, 1)
-
         if resetSHapeAngle == true then
             j = math.random(1, 4) 
             resetSHapeAngle = false
@@ -279,10 +262,8 @@ function shapes()
         end
  
     elseif shape == 4 then -- 'L' is 4
-
         -- setting screamin-green color
         love.graphics.setColor(77/255, 233/255, 76/255, 1)
-
         if resetSHapeAngle == true then
             l = math.random(1, 4) 
             resetSHapeAngle = false
@@ -321,10 +302,8 @@ function shapes()
         end
 
     elseif shape == 5 then -- 'I' is 5
-
         -- setting brilliant-azure color
-        love.graphics.setColor(55/255, 131/255, 255/255, 1)
-        
+        love.graphics.setColor(55/255, 131/255, 255/255, 1)        
         if resetSHapeAngle == true then
             i = math.random(1, 2) 
             resetSHapeAngle = false
@@ -348,10 +327,8 @@ function shapes()
         end
 
     elseif shape == 6 then -- 'O' is 6
-
             -- setting american-violet color
             love.graphics.setColor(72/255, 21/255, 170/255, 1)
-
             --**--
             --**--
             love.graphics.rectangle('fill', x, y, block, block)
@@ -360,10 +337,8 @@ function shapes()
             love.graphics.rectangle('fill', x +(block + blockDst), y + (block + blockDst), block, block)
 
     elseif shape == 7 then -- 'T' is 7
-
         -- setting cyan color
         love.graphics.setColor(0, 255/255, 255/255, 1)
-
         if resetSHapeAngle == true then
             t = math.random(1, 4) 
             resetSHapeAngle = false
