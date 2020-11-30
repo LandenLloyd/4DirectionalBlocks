@@ -1,40 +1,46 @@
- CenterBlock = Class{}
+CenterBlock = Class{}
 
 
-function CenterBlock:init(util, centerBlockTable, tetriminoTable,x,y,blockHeight,blockWidth)
+function CenterBlock:init(util, centerBlockTable, tetriminoTable, x, y, width, height)
     self.x = x
     self.y = y
-    self.height = blockHeight
-    self.width = blockWidth
+    self.width = width
+    self.height = height
     self.dy = 0
     self.dx = 0
+    VIRTUAL_WIDTH = 320
+    VIRTUAL_HEIGHT = 180
 end
 
-function CenterBlock:update()
-    self.y = self.y + self.dy 
-    self.x = self.x + self.dx 
+function CenterBlock:update(dt)
+    -- moves center block along with keys
+    self.y = self.y + self.dy * dt
+    self.x = self.x + self.dx * dt
+end    
+
+function CenterBlock:outOfBounds()
+    -- detects if center block has gone off screen
+    -- if not out of bounds returns false
+    if self.x < 0 then
+        return true
+    end
+    
+    if self.x > VIRTUAL_WIDTH then
+        return true
+    end
+    
+    if self.y < 0 then
+        return true
+    end
+    
+    if self.y > VIRTUAL_HEIGHT then
+        return true
+    end    
+
+    return false
 end
-
-function CenterBlock:up()
-    self.dy = self.dy - self.height
-end
-
-function CenterBlock:down()
-    self.dy = self.dy + self.height
-end 
-
-function CenterBlock:left()
-    self.dx = self.dx - self.width
-end
-
-function CenterBlock:right()
-    self.dx = self.dx + self.width
-end
-
-function CenterBlock:rotate()
-    centerBlockTable = util:rotate(centerBlockTable)
-end 
 
 function CenterBlock:render()
-    love.graphics.square('fill', self.x, self.y, self.width, self.height)
-end 
+    love.graphics.setColor(0, 128/255, 1, 1)
+    love.graphics.rectangle('fill', self.x, self.y, self.width, self.height)
+end    
