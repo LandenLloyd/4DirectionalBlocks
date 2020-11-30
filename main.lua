@@ -11,6 +11,8 @@ WINDOW_HEIGHT = 720
 VIRTUAL_WIDTH = 320
 VIRTUAL_HEIGHT = 180
 
+BLOCK_DIMENSION = 4
+
 -- Because score is based on time which is often fractional,
 -- we dispaly a second variable that is certainly an integer
 local score = 0
@@ -58,7 +60,7 @@ function love.load()
     })
 
     util = Util(VIRTUAL_WIDTH, VIRTUAL_HEIGHT)
-    centerBlock = CenterBlock(util, centerBlockTable, tetriminoTable)
+    centerBlock = CenterBlock(util, centerBlockTable, tetriminoTable, VIRTUAL_WIDTH/2 + 2, VIRTUAL_HEIGHT/2 + 2, BLOCK_DIMENSION, BLOCK_DIMENSION)
     tetriminoManager = TetriminoManager(util, centerBlockTable, tetriminoTable)
 
     gameState = 'start'
@@ -88,21 +90,30 @@ function love.update(dt)
             score = score + dt
             scoreDisplay = math.floor(score)
 
-            --centerBlock:update(dt)
+            
             tetriminoManager:update(dt)
 
             -- Player controls for center block
             if love.keyboard.isDown('up') then
-                centerBlock:up()
+                centerBlock.dy = -BLOCK_DIMENSION * 100
             elseif love.keyboard.isDown('down') then
-                centerBlock:down()
+                centerBlock.dy = BLOCK_DIMENSION * 100
             elseif love.keyboard.isDown('left') then
-                centerBlock:left()
+                centerBlock.dx = -BLOCK_DIMENSION * 100
             elseif love.keyboard.isDown('right') then
-                centerBlock:right()
+                centerBlock.dx = BLOCK_DIMENSION * 100
             elseif love.keyboard.isDown('space') then
-                centerBlock:rotate()
+                centerBlock:rotate(dt)
+            else
+                centerBlock.dy = 0
+                centerBlock.dx = 0    
             end
+
+            centerBlock:update(dt)
+
+            if centerBlock:outOfBounds() == true then
+                gameState = 'end'
+            end    
 
         end
     end
@@ -134,7 +145,7 @@ function love.draw()
         love.graphics.printf('Welcome To 4D Block Organizer!', 0, 10, VIRTUAL_WIDTH, 'center')
         love.graphics.printf('Press Enter Or Return To Start!', 0, 20, VIRTUAL_WIDTH, 'center')
     elseif gameState == 'play' then
-        --centerBlock:render()
+        centerBlock:render()
         --love.graphics.setFont('scoreFont')
         --love.graphics.printf(tostring(displayScore), 0, 5, VIRTUAL_WIDTH, 'left')
         tetriminoManager:render()
@@ -143,10 +154,10 @@ function love.draw()
         love.graphics.printf('The Game Is Paused, You Are Safe', 0, 10, VIRTUAL_WIDTH, 'center')
         love.graphics.printf('Press Enter Or Return To Resume!', 0, 20, VIRTUAL_WIDTH, 'center')
     elseif gameState == 'end' then
-        love.graphics.setFont('titleFont')
+        --love.graphics.setFont('titleFont')
         love.graphics.printf('Game Over!', 0, 10, VIRTUAL_WIDTH, 'center')
-        love.graphics.setFont('scoreFont')
-        love.graphics.printf('Score: ' .. tostring(displayScore), 0, 20, VIRTUAL_WIDTH, 'center')
+        --love.graphics.setFont('scoreFont')
+        --love.graphics.printf('Score: ' .. tostring(displayScore), 0, 20, VIRTUAL_WIDTH, 'center')
     end
 
     push:apply('end')
