@@ -171,6 +171,10 @@ end
 
 -- defining shapes
 function shapes()
+
+    -- Placeholder variable
+    tetriminoColor = "red"
+
     if shape == 1 then -- 'S' is 1
         -- setting reg color
         love.graphics.setColor(246/255, 0, 0, 1)
@@ -186,6 +190,11 @@ function shapes()
             love.graphics.rectangle('fill', x + (block + blockDst), y, block, block)
             love.graphics.rectangle('fill', x + (block + blockDst), y + (block + blockDst), block, block)
             love.graphics.rectangle('fill', x, y + (block + blockDst), block, block)
+
+            positionsTable = {x  + (block * 2) + (2 * blockDst) = y,
+                              x + (block + blockDst) = y,
+                              x + (block + blockDst) = y + (block + blockDst),
+                              x = y + (block + blockDst)}
         else 
             --*---
             --**--
@@ -194,6 +203,11 @@ function shapes()
             love.graphics.rectangle('fill', x, y + (block + blockDst), block, block)
             love.graphics.rectangle('fill', x + (block + blockDst), y + (block + blockDst), block, block)
             love.graphics.rectangle('fill', x + (block + blockDst), y + (block * 2) + (2 * blockDst), block, block)
+
+            positionsTable = {x = y,
+                              x = y + (block + blockDst),
+                              x + (block + blockDst) = y,
+                              x + (block + blockDst) = y + (block * 2) + (2 * blockDst)}
         end
 
     elseif shape == 2 then -- 'Z' is 2
@@ -211,6 +225,11 @@ function shapes()
             love.graphics.rectangle('fill', x + (block + blockDst), y, block, block)
             love.graphics.rectangle('fill', x + (block + blockDst), y + (block + blockDst), block, block)
             love.graphics.rectangle('fill', x + (block * 2) + (2 * blockDst), y + (block + blockDst), block, block)
+
+            positionsTable = {x = y,
+                              x + (block + blockDst) = y,
+                              x + (block + blockDst) = y + (block + blockDst),
+                              x + (block * 2) + (2 * blockDst) = y + (block + blockDst)}
         else 
             ---*--
             --**--
@@ -219,6 +238,11 @@ function shapes()
             love.graphics.rectangle('fill', x + (block + blockDst), y + (block + blockDst), block, block)
             love.graphics.rectangle('fill', x, y + (block + blockDst), block, block)
             love.graphics.rectangle('fill', x, y + (block * 2) + (2 * blockDst), block, block)
+
+            positionsTable = {x + (block + blockDst) = y,
+                              x + (block + blockDst) = y + (block + blockDst),
+                              x = y + (block + blockDst),
+                              x = y + (block * 2) + (2 * blockDst)}
         end
 
     elseif shape == 3 then -- 'J' is 3
@@ -237,6 +261,11 @@ function shapes()
             love.graphics.rectangle('fill', x + (block + blockDst), y + (block + blockDst), block, block)
             love.graphics.rectangle('fill', x + (block + blockDst), y + (block * 2) + (2 * blockDst), block, block)
             love.graphics.rectangle('fill', x, y + (block * 2) + (2 * blockDst), block, block)
+
+            positionsTable = {x + (block + blockDst) = y,
+                              x + (block + blockDst) = y + (block + blockDst),
+                              x + (block + blockDst) = y + (block * 2) + (2 * blockDst),
+                              x = y + (block * 2) + (2 * blockDst)}
         elseif j == 2 then
             --**--
             --*---
@@ -245,6 +274,11 @@ function shapes()
             love.graphics.rectangle('fill', x + (block + blockDst), y, block, block)
             love.graphics.rectangle('fill', x, y + (block + blockDst), block, block)
             love.graphics.rectangle('fill', x, y + (block * 2) + (2 * blockDst), block, block)
+
+            positionsTable = {x = y,
+                              x + (block + blockDst) = y,
+                              x = y + (block + blockDst),
+                              x = y + (block * 2) + (2 * blockDst)}
         elseif j == 3 then
             --***--
             ----*--
@@ -252,6 +286,11 @@ function shapes()
             love.graphics.rectangle('fill', x + (block + blockDst), y, block, block)
             love.graphics.rectangle('fill', x + (block * 2) + (2 * blockDst), y, block, block)
             love.graphics.rectangle('fill', x + (block * 2) + (2 * blockDst), y + (block + blockDst), block, block)
+
+            positionsTable = {x = y,
+                              x + (block + blockDst) = y,
+                              x + (block * 2) + (2 * blockDst) = y,
+                              x + (block * 2) + (2 * blockDst) = y + (block + blockDst)}
         else
             --*----
             --***--
@@ -259,6 +298,11 @@ function shapes()
             love.graphics.rectangle('fill', x, y + (block + blockDst), block, block)
             love.graphics.rectangle('fill', x + (block + blockDst), y + (block + blockDst), block, block)
             love.graphics.rectangle('fill', x + (block * 2) + (2 * blockDst), y + (block + blockDst), block, block)
+
+            positionsTable = {x = y,
+                              x = y + (block + blockDst),
+                              x + (block + blockDst) = y + (block + blockDst),
+                              x + (block * 2) + (2 * blockDst) = y + (block + blockDst)}
         end
  
     elseif shape == 4 then -- 'L' is 4
@@ -277,6 +321,11 @@ function shapes()
             love.graphics.rectangle('fill', x, y + (block + blockDst), block, block)
             love.graphics.rectangle('fill', x, y + (block * 2) + (2 * blockDst), block, block)
             love.graphics.rectangle('fill', x + (block + blockDst), y + (block * 2) + (2 * blockDst), block, block)
+
+            positionsTable = {x = y,
+                              x = y + (block + blockDst),
+                              x = y + (block * 2) + (2 * blockDst),
+                              x + (block + blockDst) = y + (block * 2) + (2 * blockDst)}
         elseif l == 2 then
             --**---
             ---*---
@@ -285,6 +334,11 @@ function shapes()
             love.graphics.rectangle('fill', x + (block + blockDst), y, block, block)
             love.graphics.rectangle('fill', x + (block + blockDst), y + (block + blockDst), block, block)
             love.graphics.rectangle('fill', x + (block + blockDst), y + (block * 2) + (2 * blockDst), block, block)
+
+            positionsTable = {x = y,
+                              x + (block + blockDst) = y,
+                              x + (block + blockDst) = y + (block + blockDst),
+                              x + (block + blockDst) = y + (block * 2) + (2 * blockDst)}
         elseif l == 3 then
             --***--
             --*----
@@ -292,6 +346,11 @@ function shapes()
             love.graphics.rectangle('fill', x + (block + blockDst), y, block, block)
             love.graphics.rectangle('fill', x + (block * 2) + (2 * blockDst), y, block, block)
             love.graphics.rectangle('fill', x, y + (block + blockDst), block, block)
+
+            positionsTable = {x = y,
+                              x + (block + blockDst) = y,
+                              x + (block * 2) + (2 * blockDst) = y,
+                              x = y + (block + blockDst)}
         else
             ----*--
             --***--
@@ -299,6 +358,11 @@ function shapes()
             love.graphics.rectangle('fill', x, y + (block + blockDst), block, block)
             love.graphics.rectangle('fill', x + (block + blockDst), y + (block + blockDst), block, block)
             love.graphics.rectangle('fill', x + (block * 2) + (2 * blockDst), y + (block + blockDst), block, block)
+
+            positionsTable = {x + (block * 2) + (2 * blockDst = y,
+                              x = y + (block + blockDst),
+                              x + (block + blockDst) = y + (block + blockDst),
+                              x + (block * 2) + (2 * blockDst) = y + (block + blockDst)}
         end
 
     elseif shape == 5 then -- 'I' is 5
@@ -318,12 +382,22 @@ function shapes()
             love.graphics.rectangle('fill', x, y + (block + blockDst), block, block)
             love.graphics.rectangle('fill', x, y + (block * 2) + (2 * blockDst), block, block)
             love.graphics.rectangle('fill', x, y + (block * 3) + (3 * blockDst), block, block)
+
+            positionsTable = {x = y,
+                              x = y + (block + blockDst),
+                              x = y + (block * 2) + (2 * blockDst),
+                              x = y + (block * 3) + (3 * blockDst)}
         else 
             --****--
             love.graphics.rectangle('fill', x, y, block, block)
             love.graphics.rectangle('fill', x + (block + blockDst), y, block, block)
             love.graphics.rectangle('fill', x + (block * 2) + (2 * blockDst), y, block, block)
             love.graphics.rectangle('fill', x + (block * 3) + (3 * blockDst), y, block, block)
+
+            positionsTable = {x = y,
+                              x + (block + blockDst) = y,
+                              x + (block * 2) + (2 * blockDst) = y,
+                              x + (block * 3) + (3 * blockDst) = y}
         end
 
     elseif shape == 6 then -- 'O' is 6
@@ -335,6 +409,11 @@ function shapes()
             love.graphics.rectangle('fill', x + (block + blockDst), y, block, block)
             love.graphics.rectangle('fill', x, y + (block + blockDst), block, block)
             love.graphics.rectangle('fill', x +(block + blockDst), y + (block + blockDst), block, block)
+
+            postionsTable = {x = y,
+                             x + (block + blockDst) = y,
+                             x = y + (block + blockDst),
+                             x +(block + blockDst) = y + (block + blockDst)}
 
     elseif shape == 7 then -- 'T' is 7
         -- setting cyan color
@@ -351,6 +430,11 @@ function shapes()
             love.graphics.rectangle('fill', x + (block + blockDst), y, block, block)
             love.graphics.rectangle('fill', x + (block * 2) + (2 * blockDst), y, block, block)
             love.graphics.rectangle('fill', x + (block + blockDst), y + (block + blockDst), block, block)
+
+            positionsTable = {x = y,
+                              x + (block + blockDst) = y,
+                              x + (block * 2) + (2 * blockDst) = y,
+                              x + (block + blockDst) = y + (block + blockDst)}
         elseif t == 2 then
             ---*---
             ---**--
@@ -359,6 +443,11 @@ function shapes()
             love.graphics.rectangle('fill', x, y + (block + blockDst), block, block)
             love.graphics.rectangle('fill', x + (block + blockDst), y + (block + blockDst), block, block)
             love.graphics.rectangle('fill', x, y + (block * 2) + (2 * blockDst), block, block)
+
+            positionsTable = {x = y,
+                              x = y + (block + blockDst),
+                              x + (block + blockDst) = y + (block + blockDst),
+                              x = y + (block * 2) + (2 * blockDst)}
         elseif t == 3 then
             ---*--
             --**--
@@ -367,6 +456,11 @@ function shapes()
             love.graphics.rectangle('fill', x, y + (block + blockDst), block, block)
             love.graphics.rectangle('fill', x + (block + blockDst), y + (block + blockDst), block, block)
             love.graphics.rectangle('fill', x + (block + blockDst), y + (block * 2) + (2 * blockDst), block, block)
+
+            positionsTable = {x + (block + blockDst) = y,
+                              x = y + (block + blockDst),
+                              x + (block + blockDst) = y + (block + blockDst),
+                              x + (block + blockDst) = y + (block * 2) + (2 * blockDst)}
         else
             ---*---
             --***--
@@ -374,6 +468,22 @@ function shapes()
             love.graphics.rectangle('fill', x, y + (block + blockDst), block, block)
             love.graphics.rectangle('fill', x + (block + blockDst), y + (block + blockDst), block, block)
             love.graphics.rectangle('fill', x + (block * 2) + (2 * blockDst), y + (block + blockDst), block, block)
+
+            positionsTable = {x + (block + blockDst) = y,
+                              x = y + (block + blockDst),
+                              x + (block + blockDst) = y + (block + blockDst),
+                              x + (block * 2) + (2 * blockDst) = y + (block + blockDst)}
         end
     end
+end
+
+function TetriminoManager:getTable()
+
+    tetriminoTable = {}
+    for x, y in pairs(positionsTable) do
+        tetriminTable[util:toCoords({x, y})] = tetriminoColor
+    end
+
+    return tetriminoTable
+
 end
