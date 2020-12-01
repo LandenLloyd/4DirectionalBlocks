@@ -20,6 +20,7 @@ local scoreDisplay = score
 
 local timeElapsed = 0
 local gameSpeed = 1
+local minGameSpeed = 0.2
 
 function love.load()
 
@@ -84,13 +85,11 @@ function love.update(dt)
 
     if timeElapsed > gameSpeed then
         timeElapsed = 0
-        gameSpeed = gameSpeed * 0.99
 
         if gameState == 'play' then
             score = score + dt
             scoreDisplay = math.floor(score)
 
-            
             tetriminoManager:update(dt)
 
             -- Player controls for center block
@@ -106,17 +105,19 @@ function love.update(dt)
                 centerBlock:rotate(dt)
             else
                 centerBlock.dy = 0
-                centerBlock.dx = 0    
+                centerBlock.dx = 0
             end
 
             centerBlock:update(dt)
 
             if centerBlock:outOfBounds() == true then
                 gameState = 'end'
-            end    
+            end
 
         end
     end
+
+    gamespeed = max(mingamespeed, gamespeed - 0.001*dt)
 
 end
 
