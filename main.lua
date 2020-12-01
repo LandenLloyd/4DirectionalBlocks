@@ -45,8 +45,8 @@ function love.load()
         --Below are two example entries, I added color because Tetris is multi-color
         --The first digit is the x coordinate, the second is the y coordinate
         --Use Util functions to swap between 2D and 1D coords
-        --[100] = 'blue', -- access this item with tetriminoTable[1]
-        --[137] = 'red',
+        --[100] = {1, 1, 1, 1}, -- access this item with tetriminoTable[1]
+        --[137] = {1, 0, 1, 1},
         --[124] = nil --Do this if you need to delete a value
     }
 
@@ -60,7 +60,7 @@ function love.load()
         vsync = true
     })
 
-    util = Util(VIRTUAL_WIDTH, VIRTUAL_HEIGHT)
+    util = Util(WINDOW_WIDTH, WINDOW_HEIGHT)
     centerBlock = CenterBlock(util, centerBlockTable, tetriminoTable, VIRTUAL_WIDTH/2 + 2, VIRTUAL_HEIGHT/2 + 2, BLOCK_DIMENSION, BLOCK_DIMENSION)
     tetriminoManager = TetriminoManager(util, centerBlockTable, tetriminoTable)
 

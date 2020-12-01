@@ -171,13 +171,10 @@ end
 
 -- defining shapes
 function shapes()
-
-    -- Placeholder variable
-    tetriminoColor = "red"
-
     if shape == 1 then -- 'S' is 1
         -- setting reg color
         love.graphics.setColor(246/255, 0, 0, 1)
+        tetriminoColor = {246/255, 0, 0, 1}
         if resetShapeAngle == true then
             s = math.random(1, 2) 
             resetShapeAngle = false
@@ -213,6 +210,7 @@ function shapes()
     elseif shape == 2 then -- 'Z' is 2
         -- setting dark-orange color
         love.graphics.setColor(255/255, 140/255, 0, 1)
+        tetriminoColor = {255/255, 140/255, 0, 1}
         if resetShapeAngle == true then
             z = math.random(1, 2) 
             resetShapeAngle = false
@@ -248,6 +246,7 @@ function shapes()
     elseif shape == 3 then -- 'J' is 3
         -- setting canary-yellow color
         love.graphics.setColor(255/255, 238/255, 0, 1)
+        tetriminoColor = {255/255, 238/255, 0, 1}
         if resetShapeAngle == true then
             j = math.random(1, 4) 
             resetShapeAngle = false
@@ -308,6 +307,7 @@ function shapes()
     elseif shape == 4 then -- 'L' is 4
         -- setting screamin-green color
         love.graphics.setColor(77/255, 233/255, 76/255, 1)
+        tetriminoColor = {77/255, 233/255, 76/255, 1}
         if resetShapeAngle == true then
             l = math.random(1, 4) 
             resetShapeAngle = false
@@ -367,7 +367,8 @@ function shapes()
 
     elseif shape == 5 then -- 'I' is 5
         -- setting brilliant-azure color
-        love.graphics.setColor(55/255, 131/255, 255/255, 1)        
+        love.graphics.setColor(55/255, 131/255, 255/255, 1)
+        tetriminoColor = {55/255, 131/255, 255/255, 1}
         if resetShapeAngle == true then
             i = math.random(1, 2) 
             resetShapeAngle = false
@@ -403,6 +404,7 @@ function shapes()
     elseif shape == 6 then -- 'O' is 6
             -- setting american-violet color
             love.graphics.setColor(72/255, 21/255, 170/255, 1)
+            tetriminoColor = {72/255, 21/255, 170/255, 1}
             --**--
             --**--
             love.graphics.rectangle('fill', x, y, block, block)
@@ -418,6 +420,7 @@ function shapes()
     elseif shape == 7 then -- 'T' is 7
         -- setting cyan color
         love.graphics.setColor(0, 255/255, 255/255, 1)
+        tetriminoColor = {0, 255/255, 255/255, 1}
         if resetShapeAngle == true then
             t = math.random(1, 4) 
             resetShapeAngle = false
@@ -478,6 +481,7 @@ function shapes()
 end
 
 function TetriminoManager:getTable()
+    -- Returns a tabular representation of the tetrimino using the format described in main.lua
 
     tetriminoTable = {}
     for x, y in pairs(positionsTable) do
