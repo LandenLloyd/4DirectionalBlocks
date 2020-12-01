@@ -84,7 +84,7 @@ function love.update(dt)
 
     if timeElapsed > gameSpeed then
         timeElapsed = 0
-        gameSpeed = gameSpeed * 0.95
+        gameSpeed = gameSpeed * 0.99
 
         if gameState == 'play' then
             score = score + dt
