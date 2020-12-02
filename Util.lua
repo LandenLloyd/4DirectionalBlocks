@@ -10,7 +10,7 @@ function Util:parseCoords(coords)
     -- Converts 1D coords to 2D table (x,y)
     x = coords % self.VIRTUAL_WIDTH
     y = math.floor(coords/self.VIRTUAL_WIDTH)
-    return {x, y}
+    return {['x]'=x, ['y']=y}
 end
 
 function Util:toCoords(coords)
@@ -78,4 +78,19 @@ function Util:adjacentElements(table1, table2)
 
     -- If we make it past the for loop then no adjacencies detected
     return false
+end
+
+function Util:rotateTable(table, pivotX, pivotY)
+    -- Rotates the table 90˚ about pivotX, pivotY
+    -- In the case of our game, pivotX and pivotY are the x, y coordinates of the centerBLock
+    rotatedTable = {}
+    for position, color in pairs(table) do
+        position = self:parseCoords(position)
+        dx = position.x - pivotX
+        dy = position.y - pivotY
+        newPosition = {pivotX - dy, pivotY + dx}
+        rotatedTable[self:toCoords(newPosition)] = color
+    end
+
+    return rotatedTable
 end
