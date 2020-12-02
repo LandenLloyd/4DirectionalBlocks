@@ -1,4 +1,5 @@
-push = require 'push'
+
+Push = require 'push'
 Class = require 'Class'
 
 require 'CenterBlock'
@@ -51,7 +52,7 @@ function love.load()
     }
 
     centerBlockTable = {
-        -- Uses same format as tetriminoTable
+        
     }
 
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
@@ -61,8 +62,9 @@ function love.load()
     })
 
     util = Util(WINDOW_WIDTH, WINDOW_HEIGHT)
-    centerBlock = CenterBlock(util, centerBlockTable, tetriminoTable, VIRTUAL_WIDTH/2 + 2, VIRTUAL_HEIGHT/2 + 2, BLOCK_DIMENSION, BLOCK_DIMENSION)
     tetriminoManager = TetriminoManager(util, centerBlockTable, tetriminoTable)
+    centerBlock = CenterBlock(util, centerBlockTable, tetriminoTable,tetriminoManager, BLOCK_DIMENSION)
+    
 
     gameState = 'start'
 
@@ -94,21 +96,21 @@ function love.update(dt)
 
             -- Player controls for center block
             if love.keyboard.isDown('up') then
-                centerBlock.dy = -BLOCK_DIMENSION * 100
+                CenterBlock:up()
             elseif love.keyboard.isDown('down') then
-                centerBlock.dy = BLOCK_DIMENSION * 100
+                CenterBlock:down()
             elseif love.keyboard.isDown('left') then
-                centerBlock.dx = -BLOCK_DIMENSION * 100
+                CenterBlock:left()
             elseif love.keyboard.isDown('right') then
-                centerBlock.dx = BLOCK_DIMENSION * 100
+                CenterBlock:right()
             elseif love.keyboard.isDown('space') then
-                centerBlock:rotate(dt)
+                centerBlock:rotate()
             else
                 centerBlock.dy = 0
                 centerBlock.dx = 0
             end
 
-            centerBlock:update(dt)
+            centerBlock:update()
 
             if centerBlock:outOfBounds() == true then
                 gameState = 'end'
