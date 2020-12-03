@@ -5,9 +5,6 @@ function TetriminoManager:init(util, centerBlockTable, tetriminoTable)
     -- use the current time, since that will vary on startup every time
     math.randomseed(os.time())
 
-    VIRTUAL_WIDTH = 320
-    VIRTUAL_HEIGHT = 180
-
     x = 0
     y = VIRTUAL_HEIGHT / 2
     -- these variables are for keeping track of our velocity on both the 

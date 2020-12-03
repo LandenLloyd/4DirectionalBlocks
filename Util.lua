@@ -10,7 +10,7 @@ function Util:parseCoords(coords)
     -- Converts 1D coords to 2D table (x,y)
     x = coords % self.VIRTUAL_WIDTH
     y = math.floor(coords/self.VIRTUAL_WIDTH)
-    return {['x]'=x, ['y']=y}
+    return {['x']=x, ['y']=y}
 end
 
 function Util:toCoords(coords)
