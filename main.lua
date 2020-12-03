@@ -1,4 +1,6 @@
+-- Thanks to Ulydev for push https://github.com/Ulydev/push
 push = require 'push'
+-- Thanks to Matthias Richter for Class https://github.com/vrld/hump/blob/master/class.lua
 Class = require 'Class'
 
 require 'CenterBlock'
