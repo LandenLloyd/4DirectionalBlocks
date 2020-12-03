@@ -6,6 +6,11 @@ function Util:init(VIRUTAL_WIDTH, VIRTUAL_HEIGHT)
     self.VIRTUAL_HEIGHT = VIRTUAL_HEIGHT
 end
 
+function Util:unpack(table)
+    -- Used for passing color tables into love.graphics.setColor
+    return table[1], table[2], table[3], table[4]
+end
+
 function Util:parseCoords(coords)
     -- Converts 1D coords to 2D table (x,y)
     x = coords % self.VIRTUAL_WIDTH

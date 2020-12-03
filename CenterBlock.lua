@@ -2,7 +2,7 @@ CenterBlock = Class{}
 
 
 function CenterBlock:init(util, centerBlockTable, tetriminoTable, tetriminoManager, BLOCK_DIMENSION)
-    x = util:tocords(VIRTUAL_WIDTH/2, VIRTUAL_HEIGHT/2)
+    x = util:toCoords(VIRTUAL_WIDTH/2, VIRTUAL_HEIGHT/2)
     centerBlockTable[x] = {1,1,1,1}
     self.width = BLOCK_DIMENSION
     self.height = BLOCK_DIMENSION
@@ -16,7 +16,7 @@ function CenterBlock:up()
     for D1, color in pairs(centerBlockTable) do
         D2 = util:parseCoords(D1)
         D2.y = D2.y - BLOCK_DIMENSION
-        y = util:tocords(D2.x, D2.y)
+        y = util:toCoords(D2.x, D2.y)
         centerBlockTable[D1] = nil
         centerBlockTable[y] = color
     end
@@ -26,7 +26,7 @@ function CenterBlock:down()
     for D1, color in pairs(centerBlockTable) do
         D2 = util:parseCoords(D1)
         D2.y = D2.y + BLOCK_DIMENSION
-        y = util:tocords(D2.x, D2.y)
+        y = util:toCoords(D2.x, D2.y)
         centerBlockTable[D1] = nil
         centerBlockTable[y] = color
     end
@@ -36,7 +36,7 @@ function CenterBlock:left()
     for D1, color in pairs(centerBlockTable) do
         D2 = util:parseCoords(D1)
         D2.x = D2.x - BLOCK_DIMENSION
-        x = util:tocords(D2.x, D2.y)
+        x = util:toCoords(D2.x, D2.y)
         centerBlockTable[D1] = nil
         centerBlockTable[x] = color
     end
@@ -46,7 +46,7 @@ function CenterBlock:right()
     for D1, color in pairs(centerBlockTable) do
         D2 = util:parseCoords(D1)
         D2.x = D2.x + BLOCK_DIMENSION
-        x = util:tocords(D2.x, D2.y)
+        x = util:toCoords(D2.x, D2.y)
         centerBlockTable[D1] = nil
         centerBlockTable[x] = color
     end
@@ -88,7 +88,7 @@ end
 function CenterBlock:render()
     for D1, color in pairs(centerBlockTable) do
         D2 = util:parseCoords(D1)
-        love.graphics.setColor(color)
+        love.graphics.setColor(util:unpack(color))
         love.graphics.rectangle('fill', D2.x, D2.y, self.width, self.height)
     end
 end 
