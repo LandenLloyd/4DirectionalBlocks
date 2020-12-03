@@ -1,10 +1,15 @@
-
-Push = require 'push'
+push = require 'push'
 Class = require 'Class'
 
 require 'CenterBlock'
 require 'TetriminoManager'
 require 'Util'
+
+-- NOTE:
+-- In multiple places we pass in actual coords rather than virtual coords
+-- This is because we decided against using virtual coords in the end,
+-- but we still had functionality for virtual coords,
+-- so we just pass in a different value and keep the misleading variable name
 
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
@@ -52,7 +57,7 @@ function love.load()
     }
 
     centerBlockTable = {
-        
+        -- Same format as above table
     }
 
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
@@ -63,7 +68,7 @@ function love.load()
 
     util = Util(WINDOW_WIDTH, WINDOW_HEIGHT)
     tetriminoManager = TetriminoManager(util, centerBlockTable, tetriminoTable)
-    centerBlock = CenterBlock(util, centerBlockTable, tetriminoTable,tetriminoManager, BLOCK_DIMENSION)
+    centerBlock = CenterBlock(util, centerBlockTable,tetriminoManager, BLOCK_DIMENSION, WINDOW_WIDTH, WINDOW_HEIGHT)
     
 
     gameState = 'start'
@@ -92,6 +97,8 @@ function love.update(dt)
             score = score + dt
             scoreDisplay = math.floor(score)
 
+            -- It is important that tetriminoManager updates before centerBlock
+            -- Because centerBlock calls tetriminoManager methods
             tetriminoManager:update(dt)
 
             -- Player controls for center block
