@@ -128,7 +128,7 @@ function love.update(dt)
         end
     end
 
-    gamespeed = max(mingamespeed, gamespeed - 0.001*dt)
+    gameSpeed = math.max(minGameSpeed, gameSpeed - 0.001*dt)
 
 end
 
