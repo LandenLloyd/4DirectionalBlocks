@@ -457,10 +457,10 @@ function shapes()
             love.graphics.rectangle('fill', x + (block + blockDst), y + (block + blockDst), block, block)
             love.graphics.rectangle('fill', x + (block + blockDst), y + (block * 2) + (2 * blockDst), block, block)
 
-            positionsTable = {x + (block + blockDst) = y,
-                              x = y + (block + blockDst),
-                              x + (block + blockDst) = y + (block + blockDst),
-                              x + (block + blockDst) = y + (block * 2) + (2 * blockDst)}
+            positionsTable = {[x + (block + blockDst)] = y,
+                              [x] = y + (block + blockDst),
+                              [x + (block + blockDst)] = y + (block + blockDst),
+                              [x + (block + blockDst)] = y + (block * 2) + (2 * blockDst)}
         else
             ---*---
             --***--
@@ -469,10 +469,10 @@ function shapes()
             love.graphics.rectangle('fill', x + (block + blockDst), y + (block + blockDst), block, block)
             love.graphics.rectangle('fill', x + (block * 2) + (2 * blockDst), y + (block + blockDst), block, block)
 
-            positionsTable = {x + (block + blockDst) = y,
-                              x = y + (block + blockDst),
-                              x + (block + blockDst) = y + (block + blockDst),
-                              x + (block * 2) + (2 * blockDst) = y + (block + blockDst)}
+            positionsTable = {[x + (block + blockDst)] = y,
+                              [x] = y + (block + blockDst),
+                              [x + (block + blockDst)] = y + (block + blockDst),
+                              [x + (block * 2) + (2 * blockDst)] = y + (block + blockDst)}
         end
     end
 end
