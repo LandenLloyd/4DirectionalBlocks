@@ -5,19 +5,19 @@ function TetriminoManager:init(util, centerBlockTable, tetriminoTable)
     -- use the current time, since that will vary on startup every time
     math.randomseed(os.time())
 
-    x = 0
-    y = VIRTUAL_HEIGHT / 2
+    local x = 0
+    local y = VIRTUAL_HEIGHT / 2
     -- these variables are for keeping track of our velocity on both the 
     -- X and Y axis, since the tetrominoes can move in two dimensions
-    dx = 100
-    dy = math.random(-5, 5)
+    local dx = 100
+    local dy = math.random(-5, 5)
 
     -- four sides of screen 
     -- 1 is up
     -- 2 is right
     -- 3 is bottom
     -- 4 is left
-    side = 4
+    local side = 4
 
     -- shape = numbers
     -- 'S' is 1
@@ -27,16 +27,16 @@ function TetriminoManager:init(util, centerBlockTable, tetriminoTable)
     -- 'I' is 5
     -- 'O' is 6
     -- 'T' is 7
-    shape = 1
+    local shape = 1
 
     -- this is for resetting shape angle
-    resetShapeAngle = false
+    local resetShapeAngle = false
 
     -- block is 4x4
-    block = 4
+    local block = 4
 
     -- distance between blocks
-    blockDst = 0.5   
+    local blockDst = 0.5   
 end
 
 function TetriminoManager:update(dt)
@@ -80,9 +80,12 @@ function TetriminoManager:update(dt)
             y = y + dy * dt
         end
     end
+    love.graphics.printf('Nothing happened in update', 0, 50, VIRTUAL_WIDTH, 'center')
 end
 
 function TetriminoManager:render()
+    -- test code
+    love.graphics.printf(tostring(x) .. ' ' .. tostring(y) .. ' ' .. tostring(side), 0, 30, VIRTUAL_WIDTH, 'center')
     shapes()
 end
 

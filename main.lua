@@ -105,30 +105,25 @@ function love.update(dt)
 
             -- Player controls for center block
             if love.keyboard.isDown('up') then
-                CenterBlock:up()
+                centerBlock:up()
             elseif love.keyboard.isDown('down') then
-                CenterBlock:down()
+                centerBlock:down()
             elseif love.keyboard.isDown('left') then
-                CenterBlock:left()
+                centerBlock:left()
             elseif love.keyboard.isDown('right') then
-                CenterBlock:right()
+                centerBlock:right()
             elseif love.keyboard.isDown('space') then
                 centerBlock:rotate()
-            else
-                centerBlock.dy = 0
-                centerBlock.dx = 0
             end
-
-            centerBlock:update()
 
             if centerBlock:outOfBounds() == true then
-                gameState = 'end'
+                -- gameState = 'end'
             end
+
+            gameSpeed = math.max(minGameSpeed, gameSpeed - 0.001*dt)
 
         end
     end
-
-    gameSpeed = math.max(minGameSpeed, gameSpeed - 0.001*dt)
 
 end
 
@@ -150,7 +145,9 @@ end
 
 function love.draw()
 
-    push:apply('start')
+    -- push:apply('start')
+    --
+    love.graphics.printf(tostring(gameSpeed), 0, 20, VIRTUAL_WIDTH, 'center')
 
     if gameState == 'start' then
         --love.graphics.setFont(fonts['titleFont'])
@@ -172,6 +169,6 @@ function love.draw()
         --love.graphics.printf('Score: ' .. tostring(displayScore), 0, 20, VIRTUAL_WIDTH, 'center')
     end
 
-    push:apply('end')
+    -- push:apply('end')
 
 end
