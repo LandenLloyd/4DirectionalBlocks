@@ -2,24 +2,24 @@ TetriminoManager = Class{}
 
 function TetriminoManager:init(util, centerBlockTable, tetriminoTable)
     -- "seed" the RNG so that calls to random are always random
-    -- use the current time, since that will vary on startup every time
+    -- use the current time, since that will varself.y on startup everself.y time
     math.randomseed(os.time())
 
-    local x = 0
-    local y = VIRTUAL_HEIGHT / 2
-    -- these variables are for keeping track of our velocity on both the 
-    -- X and Y axis, since the tetrominoes can move in two dimensions
-    local dx = 100
-    local dy = math.random(-5, 5)
+    self.x = 0
+    self.y = VIRTUAL_HEIGHT / 2
+    -- these variables are for keeping track of our velocitself.y on both the 
+    -- self.x and self.y axis, since the tetrominoes can move in two dimensions
+    self.dx = 4
+    self.dy = math.random(2) == 1 and -4 or 4
 
     -- four sides of screen 
     -- 1 is up
     -- 2 is right
     -- 3 is bottom
     -- 4 is left
-    local side = 4
+    self.side = 4
 
-    -- shape = numbers
+    -- self.shape = numbers
     -- 'S' is 1
     -- 'Z' is 2
     -- 'J' is 3
@@ -27,351 +27,350 @@ function TetriminoManager:init(util, centerBlockTable, tetriminoTable)
     -- 'I' is 5
     -- 'O' is 6
     -- 'T' is 7
-    local shape = 1
+    self.shape = 1
 
-    -- this is for resetting shape angle
-    local resetShapeAngle = false
+    -- this is for resetting self.shape angle
+    self.resetShapeAngle = false
 
-    -- block is 4x4
-    local block = 4
+    -- self.block is 4x4
+    self.block = 4
 
-    -- distance between blocks
-    local blockDst = 0.5   
+    -- distance between self.blocks
+    self.blockDst = 0.5   
 end
 
 function TetriminoManager:update(dt)
-    if side == 1 then -- 1 is up
+    if self.side == 1 then -- 1 is up
         -- if we reach the edge of the screen,
         -- go back to start
-        if y > VIRTUAL_HEIGHT - block then
-            reset()
+        if self.y > VIRTUAL_HEIGHT - self.block then
+            tetriminoManager:reset()
         else
-            x = x + dx * dt
-            y = y + dy * dt
+            self.x = self.x + self.dx * dt
+            self.y = self.y + self.dy * dt
         end
 
-    elseif side == 2 then -- 2 is right
+    elseif self.side == 2 then -- 2 is right
         -- if we reach the edge of the screen,
         -- go back to start
-        if x < 0 then
-            reset()
+        if self.x < 0 then
+            tetriminoManager:reset()
         else
-            x = x + dx * dt
-            y = y + dy * dt
+            self.x = self.x + self.dx * dt
+            self.y = self.y + self.dy * dt
         end
     
-    elseif side == 3 then -- 3 is bottom
+    elseif self.side == 3 then -- 3 is bottom
         -- if we reach the edge of the screen,
         -- go back to start
-        if y < 0 then
-            reset()
+        if self.y < 0 then
+            tetriminoManager:reset()
         else
-            x = x + dx * dt
-            y = y + dy * dt
+            self.x = self.x + self.dx * dt
+            self.y = self.y + self.dy * dt
         end
     
-    elseif side == 4 then -- 4 is left
+    elseif self.side == 4 then -- 4 is left
         -- if we reach the edge of the screen,
         -- go back to start
-        if x > VIRTUAL_WIDTH - block then
-            reset()
+        if self.x > VIRTUAL_WIDTH - self.block then
+            tetriminoManager:reset()
         else
-            x = x + dx * dt
-            y = y + dy * dt
+            self.x = self.x + self.dx * dt
+            self.y = self.y + self.dy * dt
         end
     end
-    love.graphics.printf('Nothing happened in update', 0, 50, VIRTUAL_WIDTH, 'center')
 end
 
 function TetriminoManager:render()
     -- test code
-    love.graphics.printf(tostring(x) .. ' ' .. tostring(y) .. ' ' .. tostring(side), 0, 30, VIRTUAL_WIDTH, 'center')
-    shapes()
+    love.graphics.printf(tostring(self.x ) .. ' ' .. tostring(self.y ) .. ' ' .. tostring(self.side), 0, 30, VIRTUAL_WIDTH, 'center')
+    tetriminoManager:shapes()
 end
 
 -- resets tetromino
-function reset()
-    resetShapeAngle = true
-    side = math.random(1, 4) 
-    shape = math.random(1, 7) 
+function TetriminoManager:reset()
+    self.resetShapeAngle = true
+    self.side = math.random(1, 4) 
+    self.shape = math.random(1, 7) 
 
-    if side == 1 then -- 1 is up
-        x = math.random(0, VIRTUAL_WIDTH - 12)
-        y = 0
+    if self.side == 1 then -- 1 is up
+        self.x = math.random(0, VIRTUAL_WIDTH - 12)
+        self.y = 0
     
-        if x >=0 and x <= 64 then
-            dx = 100
-            dy = 90
-        elseif x >=65 and x <= 128 then
-            dx = 100
-            dy = 90
-        elseif x >= 129 and x <= 192 then
-            dx = math.random(-5, 5)
-            dy = 90
-        elseif x >= 193 and x <= 257 then
-            dx = -100
-            dy = 90
-        elseif x >= 258 and x <= VIRTUAL_WIDTH then
-            dx = -100
-            dy = 90
+        if self.x >=0 and self.x <= 64 then
+            self.dx = 4
+            self.dy = 4
+        elseif self.x >=65 and self.x <= 128 then
+            self.dx = 4
+            self.dy = 4
+        elseif self.x >= 129 and self.x <= 192 then
+            self.dx = math.random(2) == 1 and -4 or 4
+            self.dy = 4
+        elseif self.x >= 193 and self.x <= 257 then
+            self.dx = -4
+            self.dy = 4
+        elseif self.x >= 258 and self.x <= VIRTUAL_WIDTH then
+            self.dx = -4
+            self.dy = 4
         end
 
-    elseif side == 2 then -- 2 is right
-        x = VIRTUAL_WIDTH 
-        y = math.random(0, VIRTUAL_HEIGHT - 12)
+    elseif self.side == 2 then -- 2 is right
+        self.x = VIRTUAL_WIDTH 
+        self.y = math.random(0, VIRTUAL_HEIGHT - 12)
     
-        if y >=0 and y <= 60 then
-            dx = -100
-            dy = 30
-        elseif y >=61 and y <= 120 then
-            dx = -100
-            dy = math.random(-5, 5)
-        elseif y >= 121 and y <= VIRTUAL_HEIGHT then
-            dx = -100
-            dy = -30
+        if self.y >=0 and self.y <= 60 then
+            self.dx = -4
+            self.dy = 4
+        elseif self.y >=61 and self.y <= 120 then
+            self.dx = -4
+            self.dy = math.random(2) == 1 and -4 or 4
+        elseif self.y >= 121 and self.y <= VIRTUAL_HEIGHT then
+            self.dx = -4
+            self.dy = -4
         end
     
-    elseif side == 3 then -- 3 is bottom
-        x = math.random(0, VIRTUAL_WIDTH - 12)
-        y = VIRTUAL_HEIGHT
+    elseif self.side == 3 then -- 3 is bottom
+        self.x = math.random(0, VIRTUAL_WIDTH - 12)
+        self.y = VIRTUAL_HEIGHT
     
-        if x >=0 and x <= 64 then
-            dx = 100
-            dy = -95
-        elseif x >=65 and x <= 128 then
-            dx = 100
-            dy = -95
-        elseif x >= 129 and x <= 192 then
-            dx = math.random(-5, 5)
-            dy = -95
-        elseif x >= 193 and x <= 257 then
-            dx = -100
-            dy = -95
-        elseif x >= 258 and x <= VIRTUAL_WIDTH then
-            dx = -100
-            dy = -95
+        if self.x >=0 and self.x <= 64 then
+            self.dx = 4
+            self.dy = 4
+        elseif self.x >=65 and self.x <= 128 then
+            self.dx = 4
+            self.dy = 4
+        elseif self.x >= 129 and self.x <= 192 then
+            self.dx = math.random(2) and -4 or 4
+            self.dy = -4
+        elseif self.x >= 193 and self.x <= 257 then
+            self.dx = -4
+            self.dy = -4
+        elseif self.x >= 258 and self.x <= VIRTUAL_WIDTH then
+            self.dx = -4
+            self.dy = -4
         end
     
-    elseif side == 4 then -- 4 is left
-        x = 0
-        y = math.random(0, VIRTUAL_HEIGHT - 12)
+    elseif self.side == 4 then -- 4 is left
+        self.x = 0
+        self.y = math.random(0, VIRTUAL_HEIGHT - 12)
     
-        if y >=0 and y <= 60 then
-            dx = 100
-            dy = 30
-        elseif y >=61 and y <= 120 then
-            dx = 100
-            dy = math.random(-5, 5)
-        elseif y >= 121 and y <= VIRTUAL_HEIGHT then
-            dx = 100
-            dy = -30
+        if self.y >=0 and self.y <= 60 then
+            self.dx = 4
+            self.dy = 4
+        elseif self.y >=61 and self.y <= 120 then
+            self.dx = 100
+            self.dy = math.random(2) == 1 and -4 or 4
+        elseif self.y >= 121 and self.y <= VIRTUAL_HEIGHT then
+            self.dx = 4
+            self.dy = 4
         end
     end
 end
 
 -- defining shapes
-function shapes()
-    if shape == 1 then -- 'S' is 1
+function TetriminoManager:shapes()
+    if self.shape == 1 then -- 'S' is 1
         -- setting reg color
         love.graphics.setColor(246/255, 0, 0, 1)
         tetriminoColor = {246/255, 0, 0, 1}
-        if resetShapeAngle == true then
+        if self.resetShapeAngle == true then
             s = math.random(1, 2) 
-            resetShapeAngle = false
+            self.resetShapeAngle = false
         end
 
         if s == 1 then
             ---**--
             --**---
-            love.graphics.rectangle('fill', x  + (block * 2) + (2 * blockDst), y, block, block)
-            love.graphics.rectangle('fill', x + (block + blockDst), y, block, block)
-            love.graphics.rectangle('fill', x + (block + blockDst), y + (block + blockDst), block, block)
-            love.graphics.rectangle('fill', x, y + (block + blockDst), block, block)
+            love.graphics.rectangle('fill', self.x  + (self.block * 2) + (2 * self.blockDst), self.y, self.block, self.block)
+            love.graphics.rectangle('fill', self.x + (self.block + self.blockDst), self.y, self.block, self.block)
+            love.graphics.rectangle('fill', self.x + (self.block + self.blockDst), self.y + (self.block + self.blockDst), self.block, self.block)
+            love.graphics.rectangle('fill', self.x, self.y + (self.block + self.blockDst), self.block, self.block)
 
-            positionsTable = {[x  + (block * 2) + (2 * blockDst)] = y,
-                              [x + (block + blockDst)] = y,
-                              [x + (block + blockDst)] = y + (block + blockDst),
-                              [x] = y + (block + blockDst)}
+            positionsTable = {[self.x  + (self.block * 2) + (2 * self.blockDst)] = self.y,
+                              [self.x + (self.block + self.blockDst)] = self.y,
+                              [self.x + (self.block + self.blockDst)] = self.y + (self.block + self.blockDst),
+                              [self.x] = self.y + (self.block + self.blockDst)}
         else 
             --*---
             --**--
             ---*--
-            love.graphics.rectangle('fill', x, y, block, block)
-            love.graphics.rectangle('fill', x, y + (block + blockDst), block, block)
-            love.graphics.rectangle('fill', x + (block + blockDst), y + (block + blockDst), block, block)
-            love.graphics.rectangle('fill', x + (block + blockDst), y + (block * 2) + (2 * blockDst), block, block)
+            love.graphics.rectangle('fill', self.x, self.y, self.block, self.block)
+            love.graphics.rectangle('fill', self.x, self.y + (self.block + self.blockDst), self.block, self.block)
+            love.graphics.rectangle('fill', self.x + (self.block + self.blockDst), self.y + (self.block + self.blockDst), self.block, self.block)
+            love.graphics.rectangle('fill', self.x + (self.block + self.blockDst), self.y + (self.block * 2) + (2 * self.blockDst), self.block, self.block)
 
-            positionsTable = {[x] = y,
-                              [x] = y + (block + blockDst),
-                              [x + (block + blockDst)] = y,
-                              [x + (block + blockDst)] = y + (block * 2) + (2 * blockDst)}
+            positionsTable = {[self.x] = self.y,
+                              [self.x] = self.y + (self.block + self.blockDst),
+                              [self.x + (self.block + self.blockDst)] = self.y,
+                              [self.x + (self.block + self.blockDst)] = self.y + (self.block * 2) + (2 * self.blockDst)}
         end
 
-    elseif shape == 2 then -- 'Z' is 2
+    elseif self.shape == 2 then -- 'Z' is 2
         -- setting dark-orange color
         love.graphics.setColor(255/255, 140/255, 0, 1)
         tetriminoColor = {255/255, 140/255, 0, 1}
-        if resetShapeAngle == true then
+        if self.resetShapeAngle == true then
             z = math.random(1, 2) 
-            resetShapeAngle = false
+            self.resetShapeAngle = false
         end
 
         if z == 1 then
             --**---
             ---**--
-            love.graphics.rectangle('fill', x, y, block, block)
-            love.graphics.rectangle('fill', x + (block + blockDst), y, block, block)
-            love.graphics.rectangle('fill', x + (block + blockDst), y + (block + blockDst), block, block)
-            love.graphics.rectangle('fill', x + (block * 2) + (2 * blockDst), y + (block + blockDst), block, block)
+            love.graphics.rectangle('fill', self.x, self.y, self.block, self.block)
+            love.graphics.rectangle('fill', self.x + (self.block + self.blockDst), self.y, self.block, self.block)
+            love.graphics.rectangle('fill', self.x + (self.block + self.blockDst), self.y + (self.block + self.blockDst), self.block, self.block)
+            love.graphics.rectangle('fill', self.x + (self.block * 2) + (2 * self.blockDst), self.y + (self.block + self.blockDst), self.block, self.block)
 
-            positionsTable = {[x] = y,
-                              [x + (block + blockDst)] = y,
-                              [x + (block + blockDst)] = y + (block + blockDst),
-                              [x + (block * 2) + (2 * blockDst)] = y + (block + blockDst)}
+            positionsTable = {[self.x] = self.y,
+                              [self.x + (self.block + self.blockDst)] = self.y,
+                              [self.x + (self.block + self.blockDst)] = self.y + (self.block + self.blockDst),
+                              [self.x + (self.block * 2) + (2 * self.blockDst)] = self.y + (self.block + self.blockDst)}
         else 
             ---*--
             --**--
             --*---
-            love.graphics.rectangle('fill', x + (block + blockDst), y, block, block)
-            love.graphics.rectangle('fill', x + (block + blockDst), y + (block + blockDst), block, block)
-            love.graphics.rectangle('fill', x, y + (block + blockDst), block, block)
-            love.graphics.rectangle('fill', x, y + (block * 2) + (2 * blockDst), block, block)
+            love.graphics.rectangle('fill', self.x + (self.block + self.blockDst), self.y, self.block, self.block)
+            love.graphics.rectangle('fill', self.x + (self.block + self.blockDst), self.y + (self.block + self.blockDst), self.block, self.block)
+            love.graphics.rectangle('fill', self.x, self.y + (self.block + self.blockDst), self.block, self.block)
+            love.graphics.rectangle('fill', self.x, self.y + (self.block * 2) + (2 * self.blockDst), self.block, self.block)
 
-            positionsTable = {[x + (block + blockDst)] = y,
-                              [x + (block + blockDst)] = y + (block + blockDst),
-                              [x] = y + (block + blockDst),
-                              [x] = y + (block * 2) + (2 * blockDst)}
+            positionsTable = {[self.x + (self.block + self.blockDst)] = self.y,
+                              [self.x + (self.block + self.blockDst)] = self.y + (self.block + self.blockDst),
+                              [self.x] = self.y + (self.block + self.blockDst),
+                              [self.x] = self.y + (self.block * 2) + (2 * self.blockDst)}
         end
 
-    elseif shape == 3 then -- 'J' is 3
+    elseif self.shape == 3 then -- 'J' is 3
         -- setting canary-yellow color
         love.graphics.setColor(255/255, 238/255, 0, 1)
         tetriminoColor = {255/255, 238/255, 0, 1}
-        if resetShapeAngle == true then
+        if self.resetShapeAngle == true then
             j = math.random(1, 4) 
-            resetShapeAngle = false
+            self.resetShapeAngle = false
         end
 
         if j == 1 then
             ---*--
             ---*--
             --**--
-            love.graphics.rectangle('fill', x + (block + blockDst), y, block, block)
-            love.graphics.rectangle('fill', x + (block + blockDst), y + (block + blockDst), block, block)
-            love.graphics.rectangle('fill', x + (block + blockDst), y + (block * 2) + (2 * blockDst), block, block)
-            love.graphics.rectangle('fill', x, y + (block * 2) + (2 * blockDst), block, block)
+            love.graphics.rectangle('fill', self.x + (self.block + self.blockDst), self.y, self.block, self.block)
+            love.graphics.rectangle('fill', self.x + (self.block + self.blockDst), self.y + (self.block + self.blockDst), self.block, self.block)
+            love.graphics.rectangle('fill', self.x + (self.block + self.blockDst), self.y + (self.block * 2) + (2 * self.blockDst), self.block, self.block)
+            love.graphics.rectangle('fill', self.x, self.y + (self.block * 2) + (2 * self.blockDst), self.block, self.block)
 
-            positionsTable = {[x + (block + blockDst)] = y,
-                              [x + (block + blockDst)] = y + (block + blockDst),
-                              [x + (block + blockDst)] = y + (block * 2) + (2 * blockDst),
-                              [x] = y + (block * 2) + (2 * blockDst)}
+            positionsTable = {[self.x + (self.block + self.blockDst)] = self.y,
+                              [self.x + (self.block + self.blockDst)] = self.y + (self.block + self.blockDst),
+                              [self.x + (self.block + self.blockDst)] = self.y + (self.block * 2) + (2 * self.blockDst),
+                              [self.x] = self.y + (self.block * 2) + (2 * self.blockDst)}
         elseif j == 2 then
             --**--
             --*---
             --*---
-            love.graphics.rectangle('fill', x, y, block, block)
-            love.graphics.rectangle('fill', x + (block + blockDst), y, block, block)
-            love.graphics.rectangle('fill', x, y + (block + blockDst), block, block)
-            love.graphics.rectangle('fill', x, y + (block * 2) + (2 * blockDst), block, block)
+            love.graphics.rectangle('fill', self.x, self.y, self.block, self.block)
+            love.graphics.rectangle('fill', self.x + (self.block + self.blockDst), self.y, self.block, self.block)
+            love.graphics.rectangle('fill', self.x, self.y + (self.block + self.blockDst), self.block, self.block)
+            love.graphics.rectangle('fill', self.x, self.y + (self.block * 2) + (2 * self.blockDst), self.block, self.block)
 
-            positionsTable = {[x] = y,
-                              [x + (block + blockDst)] = y,
-                              [x] = y + (block + blockDst),
-                              [x] = y + (block * 2) + (2 * blockDst)}
+            positionsTable = {[self.x] = self.y,
+                              [self.x + (self.block + self.blockDst)] = self.y,
+                              [self.x] = self.y + (self.block + self.blockDst),
+                              [self.x] = self.y + (self.block * 2) + (2 * self.blockDst)}
         elseif j == 3 then
             --***--
             ----*--
-            love.graphics.rectangle('fill', x, y, block, block)
-            love.graphics.rectangle('fill', x + (block + blockDst), y, block, block)
-            love.graphics.rectangle('fill', x + (block * 2) + (2 * blockDst), y, block, block)
-            love.graphics.rectangle('fill', x + (block * 2) + (2 * blockDst), y + (block + blockDst), block, block)
+            love.graphics.rectangle('fill', self.x, self.y, self.block, self.block)
+            love.graphics.rectangle('fill', self.x + (self.block + self.blockDst), self.y, self.block, self.block)
+            love.graphics.rectangle('fill', self.x + (self.block * 2) + (2 * self.blockDst), self.y, self.block, self.block)
+            love.graphics.rectangle('fill', self.x + (self.block * 2) + (2 * self.blockDst), self.y + (self.block + self.blockDst), self.block, self.block)
 
-            positionsTable = {[x] = y,
-                              [x + (block + blockDst)] = y,
-                              [x + (block * 2) + (2 * blockDst)] = y,
-                              [x + (block * 2) + (2 * blockDst)] = y + (block + blockDst)}
+            positionsTable = {[self.x] = self.y,
+                              [self.x + (self.block + self.blockDst)] = self.y,
+                              [self.x + (self.block * 2) + (2 * self.blockDst)] = self.y,
+                              [self.x + (self.block * 2) + (2 * self.blockDst)] = self.y + (self.block + self.blockDst)}
         else
             --*----
             --***--
-            love.graphics.rectangle('fill', x, y, block, block)
-            love.graphics.rectangle('fill', x, y + (block + blockDst), block, block)
-            love.graphics.rectangle('fill', x + (block + blockDst), y + (block + blockDst), block, block)
-            love.graphics.rectangle('fill', x + (block * 2) + (2 * blockDst), y + (block + blockDst), block, block)
+            love.graphics.rectangle('fill', self.x, self.y, self.block, self.block)
+            love.graphics.rectangle('fill', self.x, self.y + (self.block + self.blockDst), self.block, self.block)
+            love.graphics.rectangle('fill', self.x + (self.block + self.blockDst), self.y + (self.block + self.blockDst), self.block, self.block)
+            love.graphics.rectangle('fill', self.x + (self.block * 2) + (2 * self.blockDst), self.y + (self.block + self.blockDst), self.block, self.block)
 
-            positionsTable = {[x] = y,
-                              [x] = y + (block + blockDst),
-                              [x + (block + blockDst)] = y + (block + blockDst),
-                              [x + (block * 2) + (2 * blockDst)] = y + (block + blockDst)}
+            positionsTable = {[self.x] = self.y,
+                              [self.x] = self.y + (self.block + self.blockDst),
+                              [self.x + (self.block + self.blockDst)] = self.y + (self.block + self.blockDst),
+                              [self.x + (self.block * 2) + (2 * self.blockDst)] = self.y + (self.block + self.blockDst)}
         end
  
-    elseif shape == 4 then -- 'L' is 4
+    elseif self.shape == 4 then -- 'L' is 4
         -- setting screamin-green color
         love.graphics.setColor(77/255, 233/255, 76/255, 1)
         tetriminoColor = {77/255, 233/255, 76/255, 1}
-        if resetShapeAngle == true then
+        if self.resetShapeAngle == true then
             l = math.random(1, 4) 
-            resetShapeAngle = false
+            self.resetShapeAngle = false
         end
 
         if l == 1 then
             --*---
             --*---
             --**--
-            love.graphics.rectangle('fill', x, y, block, block)
-            love.graphics.rectangle('fill', x, y + (block + blockDst), block, block)
-            love.graphics.rectangle('fill', x, y + (block * 2) + (2 * blockDst), block, block)
-            love.graphics.rectangle('fill', x + (block + blockDst), y + (block * 2) + (2 * blockDst), block, block)
+            love.graphics.rectangle('fill', self.x, self.y, self.block, self.block)
+            love.graphics.rectangle('fill', self.x, self.y + (self.block + self.blockDst), self.block, self.block)
+            love.graphics.rectangle('fill', self.x, self.y + (self.block * 2) + (2 * self.blockDst), self.block, self.block)
+            love.graphics.rectangle('fill', self.x + (self.block + self.blockDst), self.y + (self.block * 2) + (2 * self.blockDst), self.block, self.block)
 
-            positionsTable = {[x] = y,
-                              [x] = y + (block + blockDst),
-                              [x] = y + (block * 2) + (2 * blockDst),
-                              [x + (block + blockDst)] = y + (block * 2) + (2 * blockDst)}
+            positionsTable = {[self.x] = self.y,
+                              [self.x] = self.y + (self.block + self.blockDst),
+                              [self.x] = self.y + (self.block * 2) + (2 * self.blockDst),
+                              [self.x + (self.block + self.blockDst)] = self.y + (self.block * 2) + (2 * self.blockDst)}
         elseif l == 2 then
             --**---
             ---*---
             ---*---
-            love.graphics.rectangle('fill', x, y, block, block)
-            love.graphics.rectangle('fill', x + (block + blockDst), y, block, block)
-            love.graphics.rectangle('fill', x + (block + blockDst), y + (block + blockDst), block, block)
-            love.graphics.rectangle('fill', x + (block + blockDst), y + (block * 2) + (2 * blockDst), block, block)
+            love.graphics.rectangle('fill', self.x, self.y, self.block, self.block)
+            love.graphics.rectangle('fill', self.x + (self.block + self.blockDst), self.y, self.block, self.block)
+            love.graphics.rectangle('fill', self.x + (self.block + self.blockDst), self.y + (self.block + self.blockDst), self.block, self.block)
+            love.graphics.rectangle('fill', self.x + (self.block + self.blockDst), self.y + (self.block * 2) + (2 * self.blockDst), self.block, self.block)
 
-            positionsTable = {[x] = y,
-                              [x + (block + blockDst)] = y,
-                              [x + (block + blockDst)] = y + (block + blockDst),
-                              [x + (block + blockDst)] = y + (block * 2) + (2 * blockDst)}
+            positionsTable = {[self.x] = self.y,
+                              [self.x + (self.block + self.blockDst)] = self.y,
+                              [self.x + (self.block + self.blockDst)] = self.y + (self.block + self.blockDst),
+                              [self.x + (self.block + self.blockDst)] = self.y + (self.block * 2) + (2 * self.blockDst)}
         elseif l == 3 then
             --***--
             --*----
-            love.graphics.rectangle('fill', x, y, block, block)
-            love.graphics.rectangle('fill', x + (block + blockDst), y, block, block)
-            love.graphics.rectangle('fill', x + (block * 2) + (2 * blockDst), y, block, block)
-            love.graphics.rectangle('fill', x, y + (block + blockDst), block, block)
+            love.graphics.rectangle('fill', self.x, self.y, self.block, self.block)
+            love.graphics.rectangle('fill', self.x + (self.block + self.blockDst), self.y, self.block, self.block)
+            love.graphics.rectangle('fill', self.x + (self.block * 2) + (2 * self.blockDst), self.y, self.block, self.block)
+            love.graphics.rectangle('fill', self.x, self.y + (self.block + self.blockDst), self.block, self.block)
 
-            positionsTable = {[x] = y,
-                              [x + (block + blockDst)] = y,
-                              [x + (block * 2) + (2 * blockDst)] = y,
-                              [x] = y + (block + blockDst)}
+            positionsTable = {[self.x] = self.y,
+                              [self.x + (self.block + self.blockDst)] = self.y,
+                              [self.x + (self.block * 2) + (2 * self.blockDst)] = self.y,
+                              [self.x] = self.y + (self.block + self.blockDst)}
         else
             ----*--
             --***--
-            love.graphics.rectangle('fill', x + (block * 2) + (2 * blockDst), y, block, block)
-            love.graphics.rectangle('fill', x, y + (block + blockDst), block, block)
-            love.graphics.rectangle('fill', x + (block + blockDst), y + (block + blockDst), block, block)
-            love.graphics.rectangle('fill', x + (block * 2) + (2 * blockDst), y + (block + blockDst), block, block)
+            love.graphics.rectangle('fill', self.x + (self.block * 2) + (2 * self.blockDst), self.y, self.block, self.block)
+            love.graphics.rectangle('fill', self.x, self.y + (self.block + self.blockDst), self.block, self.block)
+            love.graphics.rectangle('fill', self.x + (self.block + self.blockDst), self.y + (self.block + self.blockDst), self.block, self.block)
+            love.graphics.rectangle('fill', self.x + (self.block * 2) + (2 * self.blockDst), self.y + (self.block + self.blockDst), self.block, self.block)
 
-            positionsTable = {[x + (block * 2) + (2 * blockDst)] = y,
-                              [x] = y + (block + blockDst),
-                              [x + (block + blockDst)] = y + (block + blockDst),
-                              [x + (block * 2) + (2 * blockDst)] = y + (block + blockDst)}
+            positionsTable = {[self.x + (self.block * 2) + (2 * self.blockDst)] = self.y,
+                              [self.x] = self.y + (self.block + self.blockDst),
+                              [self.x + (self.block + self.blockDst)] = self.y + (self.block + self.blockDst),
+                              [self.x + (self.block * 2) + (2 * self.blockDst)] = self.y + (self.block + self.blockDst)}
         end
 
-    elseif shape == 5 then -- 'I' is 5
+    elseif self.shape == 5 then -- 'I' is 5
         -- setting brilliant-azure color
         love.graphics.setColor(55/255, 131/255, 255/255, 1)
         tetriminoColor = {55/255, 131/255, 255/255, 1}
-        if resetShapeAngle == true then
+        if self.resetShapeAngle == true then
             i = math.random(1, 2) 
-            resetShapeAngle = false
+            self.resetShapeAngle = false
         end
         
         if i == 1 then
@@ -379,103 +378,103 @@ function shapes()
             --*--
             --*--
             --*--
-            love.graphics.rectangle('fill', x, y, block, block)
-            love.graphics.rectangle('fill', x, y + (block + blockDst), block, block)
-            love.graphics.rectangle('fill', x, y + (block * 2) + (2 * blockDst), block, block)
-            love.graphics.rectangle('fill', x, y + (block * 3) + (3 * blockDst), block, block)
+            love.graphics.rectangle('fill', self.x, self.y, self.block, self.block)
+            love.graphics.rectangle('fill', self.x, self.y + (self.block + self.blockDst), self.block, self.block)
+            love.graphics.rectangle('fill', self.x, self.y + (self.block * 2) + (2 * self.blockDst), self.block, self.block)
+            love.graphics.rectangle('fill', self.x, self.y + (self.block * 3) + (3 * self.blockDst), self.block, self.block)
 
-            positionsTable = {[x] = y,
-                              [x] = y + (block + blockDst),
-                              [x] = y + (block * 2) + (2 * blockDst),
-                              [x] = y + (block * 3) + (3 * blockDst)}
+            positionsTable = {[self.x] = self.y,
+                              [self.x] = self.y + (self.block + self.blockDst),
+                              [self.x] = self.y + (self.block * 2) + (2 * self.blockDst),
+                              [self.x] = self.y + (self.block * 3) + (3 * self.blockDst)}
         else 
             --****--
-            love.graphics.rectangle('fill', x, y, block, block)
-            love.graphics.rectangle('fill', x + (block + blockDst), y, block, block)
-            love.graphics.rectangle('fill', x + (block * 2) + (2 * blockDst), y, block, block)
-            love.graphics.rectangle('fill', x + (block * 3) + (3 * blockDst), y, block, block)
+            love.graphics.rectangle('fill', self.x, self.y, self.block, self.block)
+            love.graphics.rectangle('fill', self.x + (self.block + self.blockDst), self.y, self.block, self.block)
+            love.graphics.rectangle('fill', self.x + (self.block * 2) + (2 * self.blockDst), self.y, self.block, self.block)
+            love.graphics.rectangle('fill', self.x + (self.block * 3) + (3 * self.blockDst), self.y, self.block, self.block)
 
-            positionsTable = {[x] = y,
-                              [x + (block + blockDst)] = y,
-                              [x + (block * 2) + (2 * blockDst)] = y,
-                              [x + (block * 3) + (3 * blockDst)] = y}
+            positionsTable = {[self.x] = self.y,
+                              [self.x + (self.block + self.blockDst)] = self.y,
+                              [self.x + (self.block * 2) + (2 * self.blockDst)] = self.y,
+                              [self.x + (self.block * 3) + (3 * self.blockDst)] = self.y}
         end
 
-    elseif shape == 6 then -- 'O' is 6
+    elseif self.shape == 6 then -- 'O' is 6
             -- setting american-violet color
             love.graphics.setColor(72/255, 21/255, 170/255, 1)
             tetriminoColor = {72/255, 21/255, 170/255, 1}
             --**--
             --**--
-            love.graphics.rectangle('fill', x, y, block, block)
-            love.graphics.rectangle('fill', x + (block + blockDst), y, block, block)
-            love.graphics.rectangle('fill', x, y + (block + blockDst), block, block)
-            love.graphics.rectangle('fill', x +(block + blockDst), y + (block + blockDst), block, block)
+            love.graphics.rectangle('fill', self.x, self.y, self.block, self.block)
+            love.graphics.rectangle('fill', self.x + (self.block + self.blockDst), self.y, self.block, self.block)
+            love.graphics.rectangle('fill', self.x, self.y + (self.block + self.blockDst), self.block, self.block)
+            love.graphics.rectangle('fill', self.x +(self.block + self.blockDst), self.y + (self.block + self.blockDst), self.block, self.block)
 
-            postionsTable = {[x] = y,
-                             [x + (block + blockDst)] = y,
-                             [x] = y + (block + blockDst),
-                             [x +(block + blockDst)] = y + (block + blockDst)}
+            postionsTable = {[self.x] = self.y,
+                             [self.x + (self.block + self.blockDst)] = self.y,
+                             [self.x] = self.y + (self.block + self.blockDst),
+                             [self.x +(self.block + self.blockDst)] = self.y + (self.block + self.blockDst)}
 
-    elseif shape == 7 then -- 'T' is 7
+    elseif self.shape == 7 then -- 'T' is 7
         -- setting cyan color
         love.graphics.setColor(0, 255/255, 255/255, 1)
         tetriminoColor = {0, 255/255, 255/255, 1}
-        if resetShapeAngle == true then
+        if self.resetShapeAngle == true then
             t = math.random(1, 4) 
-            resetShapeAngle = false
+            self.resetShapeAngle = false
         end
 
         if t == 1 then
             --***--
             ---*---
-            love.graphics.rectangle('fill', x, y, block, block)
-            love.graphics.rectangle('fill', x + (block + blockDst), y, block, block)
-            love.graphics.rectangle('fill', x + (block * 2) + (2 * blockDst), y, block, block)
-            love.graphics.rectangle('fill', x + (block + blockDst), y + (block + blockDst), block, block)
+            love.graphics.rectangle('fill', self.x, self.y, self.block, self.block)
+            love.graphics.rectangle('fill', self.x + (self.block + self.blockDst), self.y, self.block, self.block)
+            love.graphics.rectangle('fill', self.x + (self.block * 2) + (2 * self.blockDst), self.y, self.block, self.block)
+            love.graphics.rectangle('fill', self.x + (self.block + self.blockDst), self.y + (self.block + self.blockDst), self.block, self.block)
 
-            positionsTable = {[x] = y,
-                              [x + (block + blockDst)] = y,
-                              [x + (block * 2) + (2 * blockDst)] = y,
-                              [x + (block + blockDst)]= y + (block + blockDst)}
+            positionsTable = {[self.x] = self.y,
+                              [self.x + (self.block + self.blockDst)] = self.y,
+                              [self.x + (self.block * 2) + (2 * self.blockDst)] = self.y,
+                              [self.x + (self.block + self.blockDst)]= self.y + (self.block + self.blockDst)}
         elseif t == 2 then
             ---*---
             ---**--
             ---*---
-            love.graphics.rectangle('fill', x, y, block, block)
-            love.graphics.rectangle('fill', x, y + (block + blockDst), block, block)
-            love.graphics.rectangle('fill', x + (block + blockDst), y + (block + blockDst), block, block)
-            love.graphics.rectangle('fill', x, y + (block * 2) + (2 * blockDst), block, block)
+            love.graphics.rectangle('fill', self.x, self.y, self.block, self.block)
+            love.graphics.rectangle('fill', self.x, self.y + (self.block + self.blockDst), self.block, self.block)
+            love.graphics.rectangle('fill', self.x + (self.block + self.blockDst), self.y + (self.block + self.blockDst), self.block, self.block)
+            love.graphics.rectangle('fill', self.x, self.y + (self.block * 2) + (2 * self.blockDst), self.block, self.block)
 
-            positionsTable = {[x] = y,
-                              [x] = y + (block + blockDst),
-                              [x + (block + blockDst)] = y + (block + blockDst),
-                              [x] = y + (block * 2) + (2 * blockDst)}
+            positionsTable = {[self.x] = self.y,
+                              [self.x] = self.y + (self.block + self.blockDst),
+                              [self.x + (self.block + self.blockDst)] = self.y + (self.block + self.blockDst),
+                              [self.x] = self.y + (self.block * 2) + (2 * self.blockDst)}
         elseif t == 3 then
             ---*--
             --**--
             ---*--
-            love.graphics.rectangle('fill', x + (block + blockDst), y, block, block)
-            love.graphics.rectangle('fill', x, y + (block + blockDst), block, block)
-            love.graphics.rectangle('fill', x + (block + blockDst), y + (block + blockDst), block, block)
-            love.graphics.rectangle('fill', x + (block + blockDst), y + (block * 2) + (2 * blockDst), block, block)
+            love.graphics.rectangle('fill', self.x + (self.block + self.blockDst), self.y, self.block, self.block)
+            love.graphics.rectangle('fill', self.x, self.y + (self.block + self.blockDst), self.block, self.block)
+            love.graphics.rectangle('fill', self.x + (self.block + self.blockDst), self.y + (self.block + self.blockDst), self.block, self.block)
+            love.graphics.rectangle('fill', self.x + (self.block + self.blockDst), self.y + (self.block * 2) + (2 * self.blockDst), self.block, self.block)
 
-            positionsTable = {[x + (block + blockDst)] = y,
-                              [x] = y + (block + blockDst),
-                              [x + (block + blockDst)] = y + (block + blockDst),
-                              [x + (block + blockDst)] = y + (block * 2) + (2 * blockDst)}
+            positionsTable = {[self.x + (self.block + self.blockDst)] = self.y,
+                              [self.x] = self.y + (self.block + self.blockDst),
+                              [self.x + (self.block + self.blockDst)] = self.y + (self.block + self.blockDst),
+                              [self.x + (self.block + self.blockDst)] = self.y + (self.block * 2) + (2 * self.blockDst)}
         else
             ---*---
             --***--
-            love.graphics.rectangle('fill', x + (block + blockDst), y, block, block)
-            love.graphics.rectangle('fill', x, y + (block + blockDst), block, block)
-            love.graphics.rectangle('fill', x + (block + blockDst), y + (block + blockDst), block, block)
-            love.graphics.rectangle('fill', x + (block * 2) + (2 * blockDst), y + (block + blockDst), block, block)
+            love.graphics.rectangle('fill', self.x + (self.block + self.blockDst), self.y, self.block, self.block)
+            love.graphics.rectangle('fill', self.x, self.y + (self.block + self.blockDst), self.block, self.block)
+            love.graphics.rectangle('fill', self.x + (self.block + self.blockDst), self.y + (self.block + self.blockDst), self.block, self.block)
+            love.graphics.rectangle('fill', self.x + (self.block * 2) + (2 * self.blockDst), self.y + (self.block + self.blockDst), self.block, self.block)
 
-            positionsTable = {[x + (block + blockDst)] = y,
-                              [x] = y + (block + blockDst),
-                              [x + (block + blockDst)] = y + (block + blockDst),
-                              [x + (block * 2) + (2 * blockDst)] = y + (block + blockDst)}
+            positionsTable = {[self.x + (self.block + self.blockDst)] = self.y,
+                              [self.x] = self.y + (self.block + self.blockDst),
+                              [self.x + (self.block + self.blockDst)] = self.y + (self.block + self.blockDst),
+                              [self.x + (self.block * 2) + (2 * self.blockDst)] = self.y + (self.block + self.blockDst)}
         end
     end
 end

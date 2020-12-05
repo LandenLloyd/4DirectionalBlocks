@@ -101,7 +101,7 @@ function love.update(dt)
 
             -- It is important that tetriminoManager updates before centerBlock
             -- Because centerBlock calls tetriminoManager methods
-            tetriminoManager:update(dt)
+            tetriminoManager:update(1)
 
             -- Player controls for center block
             if love.keyboard.isDown('up') then
