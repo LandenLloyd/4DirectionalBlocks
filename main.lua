@@ -68,9 +68,9 @@ function love.load()
         vsync = true
     })
 
-    util = Util(WINDOW_WIDTH, WINDOW_HEIGHT)
+    util = Util(VIRTUAL_WIDTH, VIRTUAL_HEIGHT)
     tetriminoManager = TetriminoManager(util, centerBlockTable, tetriminoTable)
-    centerBlock = CenterBlock(util, centerBlockTable,tetriminoManager, BLOCK_DIMENSION, WINDOW_WIDTH, WINDOW_HEIGHT)
+    centerBlock = CenterBlock(util, centerBlockTable,tetriminoManager, BLOCK_DIMENSION, VIRTUAL_WIDTH, VIRTUAL_HEIGHT)
     
 
     gameState = 'start'
@@ -120,9 +120,11 @@ function love.update(dt)
                 -- gameState = 'end'
             end
 
-            gameSpeed = math.max(minGameSpeed, gameSpeed - 0.001*dt)
-
         end
+    end
+
+    if gameState == 'play' then
+        gameSpeed = math.max(minGameSpeed, gameSpeed - 0.01*dt)
     end
 
 end
@@ -145,8 +147,7 @@ end
 
 function love.draw()
 
-    -- push:apply('start')
-    --
+    push:apply('start')
     love.graphics.printf(tostring(gameSpeed), 0, 20, VIRTUAL_WIDTH, 'center')
 
     if gameState == 'start' then
@@ -169,6 +170,6 @@ function love.draw()
         --love.graphics.printf('Score: ' .. tostring(displayScore), 0, 20, VIRTUAL_WIDTH, 'center')
     end
 
-    -- push:apply('end')
+    push:apply('end')
 
 end
