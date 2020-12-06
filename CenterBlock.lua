@@ -12,9 +12,9 @@ function CenterBlock:init(util, centerBlockTable, tetriminoManager, BLOCK_DIMENS
     self.py = VIRTUAL_HEIGHT/2
 end
 
-function CenterBlock:update()   
-
-end    
+function CenterBlock:update(dt)
+    self:handleCollisions()
+end
 
 function CenterBlock:up()
     self.py  = self.py - BLOCK_DIMENSION
@@ -66,6 +66,12 @@ end
 
 function CenterBlock:handleCollisions()
     tetriminoTable = tetriminoManager:getTable()
+    -- starttest
+    local printx = 0
+    for key, value in pairs(tetriminoTable) do
+        love.graphics.printf(tostring(key), printx, 20, VIRTUAL_WIDTH, 'center')
+    end
+    -- endtest
     if util:adjacentElements(tetriminoTable, centerBlockTable) then
         centerBlockTable = util:mergeTables(tetriminoTable, centerBlockTable)
         tetriminoManager:reset()

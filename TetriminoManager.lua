@@ -36,7 +36,7 @@ function TetriminoManager:init(util, centerBlockTable, tetriminoTable)
     self.block = 4
 
     -- distance between self.blocks
-    self.blockDst = 0.5   
+    self.blockDst = 0
 end
 
 function TetriminoManager:update(dt)
@@ -484,7 +484,7 @@ function TetriminoManager:getTable()
 
     tetriminoTable = {}
     for x, y in pairs(positionsTable) do
-        tetriminTable[util:toCoords({x, y})] = tetriminoColor
+        tetriminoTable[util:toCoords({x, y})] = tetriminoColor
     end
 
     return tetriminoTable

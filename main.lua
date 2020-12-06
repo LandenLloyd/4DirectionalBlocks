@@ -26,9 +26,10 @@ BLOCK_DIMENSION = 4
 local score = 0
 local scoreDisplay = score
 
+-- Variables for controlling the flow of the game
 local timeElapsed = 0
-local gameSpeed = 1
-local minGameSpeed = 0.2
+local gameSpeed = 0.25
+local minGameSpeed = 0.05
 
 function love.load()
 
@@ -71,7 +72,6 @@ function love.load()
     util = Util(VIRTUAL_WIDTH, VIRTUAL_HEIGHT)
     tetriminoManager = TetriminoManager(util, centerBlockTable, tetriminoTable)
     centerBlock = CenterBlock(util, centerBlockTable,tetriminoManager, BLOCK_DIMENSION, VIRTUAL_WIDTH, VIRTUAL_HEIGHT)
-    
 
     gameState = 'start'
 
@@ -99,20 +99,30 @@ function love.update(dt)
             score = score + dt
             scoreDisplay = math.floor(score)
 
+            tick = tick + 1
+            if tick >= 4 then
+                -- We want the tetrmino to move slower than the player
+                -- so the player can catch up
+                tetriminoManager:update(1)
+                tick = 0
+            end
             -- It is important that tetriminoManager updates before centerBlock
             -- Because centerBlock calls tetriminoManager methods
-            tetriminoManager:update(1)
 
             -- Player controls for center block
             if love.keyboard.isDown('up') then
                 centerBlock:up()
             elseif love.keyboard.isDown('down') then
                 centerBlock:down()
-            elseif love.keyboard.isDown('left') then
+            end
+
+            if love.keyboard.isDown('left') then
                 centerBlock:left()
             elseif love.keyboard.isDown('right') then
                 centerBlock:right()
-            elseif love.keyboard.isDown('space') then
+            end
+
+            if love.keyboard.isDown('space') then
                 centerBlock:rotate()
             end
 
@@ -120,11 +130,17 @@ function love.update(dt)
                 -- gameState = 'end'
             end
 
+            centerBlock:update(1)
+        else
+            -- We want the game to be predictable;
+            -- so we want the game to start from the same state everytime
+            tick = 0
+            timeElapsed = 0
         end
     end
 
     if gameState == 'play' then
-        gameSpeed = math.max(minGameSpeed, gameSpeed - 0.01*dt)
+        gameSpeed = math.max(minGameSpeed, gameSpeed - 0.001*dt)
     end
 
 end
@@ -148,8 +164,6 @@ end
 function love.draw()
 
     push:apply('start')
-    love.graphics.printf(tostring(gameSpeed), 0, 20, VIRTUAL_WIDTH, 'center')
-
     if gameState == 'start' then
         --love.graphics.setFont(fonts['titleFont'])
         love.graphics.printf('Welcome To 4D Block Organizer!', 0, 10, VIRTUAL_WIDTH, 'center')
