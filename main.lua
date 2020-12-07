@@ -41,9 +41,10 @@ function love.load()
     scoreFont = love.graphics.newFont('assets/font.ttf', 8)
     love.graphics.setFont(scoreFont)
 
+    -- backgroudMusic credit Lion Free Music https://www.youtube.com/watch?v=dLFq9-P1eHQ
+    -- offScreen credit Zapsplat.com 
     sounds = {
         ['backgroundMusic'] = love.audio.newSource('assets/backgroundMusic.mp3', 'static'),
-        ['backgroundMusic2'] = love.audio.newSource('assets/backgroundMusic2.mp3', 'static'),
         ['offScreen'] = love.audio.newSource('assets/offScreen.mp3', 'static')
     }
 
