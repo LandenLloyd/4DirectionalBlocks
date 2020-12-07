@@ -91,8 +91,10 @@ function love.update(dt)
     end
 
     if gameState == 'play' then
-        score = score + dt
         scoreDisplay = math.floor(score)
+        if centerBlock:update(1) == true then
+            score = score + 10
+        end
     end
 
     if timeElapsed > gameSpeed then
@@ -134,6 +136,9 @@ function love.update(dt)
             end
 
             centerBlock:update(1)
+            if centerBlock:update(1) == true then
+                score = score + 10
+            end
         else
             -- We want the game to be predictable;
             -- so we want the game to start from the same state everytime
