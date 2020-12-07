@@ -117,7 +117,7 @@ function love.update(dt)
             end
 
             if centerBlock:outOfBounds() == true then
-                -- gameState = 'end'
+                gameState = 'end'
             end
 
             centerBlock:update(1)
@@ -145,9 +145,9 @@ end
 
 function love.keypressed(key)
     if key == 'escape' then
-        if gameState == 'pause' then
+        if gameState == 'pause' or gameState == 'end' then
             love.event.quit()
-        elseif gameState ~= 'end' and gameState ~= 'pause' then
+        else
             gameState = 'pause'
         end
     end
