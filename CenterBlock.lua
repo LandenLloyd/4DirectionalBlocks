@@ -92,13 +92,10 @@ function CenterBlock:outOfBounds()
             return true
         end
     
-        if D2.y < 0 then
+        -- Detecting if the player has wrapped around.
+        if D2.y % 4 ~= 2 then
             return true
         end
-    
-        if D2.y > VIRTUAL_HEIGHT then
-            return true
-        end    
     end
 
     return false
