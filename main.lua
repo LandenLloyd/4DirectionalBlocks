@@ -31,6 +31,8 @@ local timeElapsed = 0
 local gameSpeed = 0.15
 local minGameSpeed = 0.05
 
+local endLoopPlayed = false
+
 function love.load()
 
     love.graphics.setDefaultFilter('nearest', 'nearest')
@@ -201,7 +203,10 @@ function love.draw()
         love.graphics.setFont(titleFont)
         love.graphics.printf('Game Over!', 0, 10, VIRTUAL_WIDTH, 'center')
         sounds['backgroundMusic']:stop()
-        sounds['offScreen']:play()
+        if not endLoopPlayed then
+            sounds['offScreen']:play()
+            endLoopPlayed = true
+        end
         love.graphics.setFont(scoreFont)
         love.graphics.printf('Score: ' .. tostring(scoreDisplay), 0, 20, VIRTUAL_WIDTH, 'center')
     end
