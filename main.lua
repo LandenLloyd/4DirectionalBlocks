@@ -24,7 +24,6 @@ BLOCK_DIMENSION = 4
 -- Because score is based on time which is often fractional,
 -- we dispaly a second variable that is certainly an integer
 score = 0
-local scoreDisplay = score
 
 -- Variables for controlling the flow of the game
 local timeElapsed = 0
@@ -114,19 +113,19 @@ function love.update(dt)
                 centerBlock:rotate()
             end
 
+            if centerBlock:outOfBounds() == true then
+                gameState = 'end'
+            end
+
+            centerBlock:update(1)
+
             tick = tick + 1
             if tick >= 4 then
                 tetriminoManager:update(1)
                 tick = 0
             end
 
-            if centerBlock:outOfBounds() == true then
-                gameState = 'end'
-            end
-
             -- centerBlock:update(1) only handles collisions
-            -- we need to call twice; once in reaction to the player's movement and another time
-            -- in reaction to the tetriminoes movement
             centerBlock:update(1)
 
             tetriminoManager.hasReset = false
@@ -141,7 +140,6 @@ function love.update(dt)
     if gameState == 'play' then
         gameSpeed = math.max(minGameSpeed, gameSpeed - 0.001*dt)
     end
-
 end
 
 function love.keypressed(key)
@@ -181,7 +179,7 @@ function love.draw()
         love.graphics.printf('Build the largest block you can!!!', 0, 70, VIRTUAL_WIDTH, 'center')
     elseif gameState == 'play' then
         love.graphics.setFont(scoreFont)
-        love.graphics.printf("Score: " .. tostring(scoreDisplay), 0, 5, VIRTUAL_WIDTH, 'left')
+        love.graphics.printf("Score: " .. tostring(score), 0, 5, VIRTUAL_WIDTH, 'left')
     elseif gameState == 'pause' then
         love.graphics.setFont(titleFont)
         love.graphics.printf('The Game Is Paused, You Are Safe', 0, 10, VIRTUAL_WIDTH, 'center')
@@ -196,7 +194,7 @@ function love.draw()
             endLoopPlayed = true
         end
         love.graphics.setFont(scoreFont)
-        love.graphics.printf('Score: ' .. tostring(scoreDisplay), 0, 20, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf('Score: ' .. tostring(score), 0, 20, VIRTUAL_WIDTH, 'center')
     end
 
     push:apply('end')

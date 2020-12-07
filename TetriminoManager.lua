@@ -155,7 +155,8 @@ function TetriminoManager:reset()
     end
 
     -- Because we were having double-counting errors
-    self:update(1)
+    tetriminoTable = {}
+    self:render()
 end
 
 -- defining shapes
