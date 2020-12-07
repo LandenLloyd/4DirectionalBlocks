@@ -95,8 +95,10 @@ function TetriminoManager:reset()
     self.shape = math.random(1, 7) 
 
     if self.side == 1 then -- 1 is up
+        -- We offset the result by 2 for y-coords because the center of the screen is not a multiple of 4, but rather
+        -- congruent to 2 (mod 4). By adding two to a multiple of 4 we should get no alignment issues.
         self.x = math.random(0, (VIRTUAL_WIDTH - 12) / self.block) * self.block
-        self.y = 0
+        self.y = 2
     
         if self.x >=0 and self.x <= 64 then
             self.dx = self.block
@@ -116,8 +118,9 @@ function TetriminoManager:reset()
         end
 
     elseif self.side == 2 then -- 2 is right
-        self.x = VIRTUAL_WIDTH 
-        self.y = math.random(0, (VIRTUAL_HEIGHT - 12) / self.block) * self.block
+        -- -2 rather than +2 to avoid out of bounds issues at spawn
+        self.x = VIRTUAL_WIDTH
+        self.y = 2 + math.random(0, (VIRTUAL_HEIGHT - 12) / self.block) * self.block
     
         if self.y >=0 and self.y <= 60 then
             self.dx = -self.block
@@ -132,7 +135,7 @@ function TetriminoManager:reset()
     
     elseif self.side == 3 then -- 3 is bottom
         self.x = math.random(0, (VIRTUAL_WIDTH - 12) / self.block) * self.block
-        self.y = VIRTUAL_HEIGHT
+        self.y = VIRTUAL_HEIGHT - 2
     
         if self.x >=0 and self.x <= 64 then
             self.dx = self.block
@@ -153,7 +156,7 @@ function TetriminoManager:reset()
     
     elseif self.side == 4 then -- 4 is left
         self.x = 0
-        self.y = math.random(0, (VIRTUAL_HEIGHT - 12) / self.block) * self.block
+        self.y = 2 + math.random(0, (VIRTUAL_HEIGHT - 12) / self.block) * self.block
     
         if self.y >=0 and self.y <= 60 then
             self.dx = self.block
