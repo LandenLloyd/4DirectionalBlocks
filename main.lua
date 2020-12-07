@@ -117,7 +117,7 @@ function love.update(dt)
             end
 
             if centerBlock:outOfBounds() == true then
-                -- gameState = 'end'
+                gameState = 'end'
             end
 
             centerBlock:update(1)
