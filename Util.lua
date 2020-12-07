@@ -1,9 +1,10 @@
 Util = Class{}
 
 --TODO
-function Util:init(VIRUTAL_WIDTH, VIRTUAL_HEIGHT)
+function Util:init(VIRUTAL_WIDTH, VIRTUAL_HEIGHT, BLOCK_DIMENSION)
     self.VIRTUAL_WIDTH = VIRTUAL_WIDTH
     self.VIRTUAL_HEIGHT = VIRTUAL_HEIGHT
+    self.BLOCK_DIMENSION = BLOCK_DIMENSION
 end
 
 function Util:unpack(table)
@@ -67,10 +68,10 @@ function Util:adjacentElements(table1, table2)
 
         if otherTable[key] ~= nil then return true end
 
-        if key - 1 < minCoord then left = key else left = key - 1 end
+        if key - self.BLOCK_DIMENSION < minCoord then left = key else left = key - self.BLOCK_DIMENSION end
         if otherTable[left] ~= nil then return true end
 
-        if key + 1 > maxCoord then right = key else right = key + 1 end
+        if key + self.BLOCK_DIMENSION > maxCoord then right = key else right = key + self.BLOCK_DIMENSION end
         if otherTable[right] ~= nil then return true end
 
         if key - VIRTUAL_WIDTH < minCoord then up = key else up = key - VIRTUAL_WIDTH end
@@ -79,12 +80,6 @@ function Util:adjacentElements(table1, table2)
         if key + VIRTUAL_WIDTH > maxCoord then down = key else down = key + VIRTUAL_WIDTH end
         if otherTable[down] ~= nil then return true end
 
-        love.graphics.setColor(1, 0, 0, 1)
-        love.graphics.printf(tostring(key), 0, 10, VIRTUAL_WIDTH, 'center')
-        love.graphics.printf(tostring(left), 0, 20, VIRTUAL_WIDTH, 'center')
-        love.graphics.printf(tostring(right), 0, 30, VIRTUAL_WIDTH, 'center')
-        love.graphics.printf(tostring(up), 0, 40, VIRTUAL_WIDTH, 'center')
-        love.graphics.printf(tostring(down), 0, 50, VIRTUAL_WIDTH, 'center')
     end
 
     -- If we make it past the for loop then no adjacencies detected

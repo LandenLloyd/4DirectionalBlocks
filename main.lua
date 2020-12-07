@@ -67,7 +67,7 @@ function love.load()
         vsync = true
     })
 
-    util = Util(VIRTUAL_WIDTH, VIRTUAL_HEIGHT)
+    util = Util(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, BLOCK_DIMENSION)
     tetriminoManager = TetriminoManager(util, centerBlockTable, tetriminoTable)
     centerBlock = CenterBlock(util, centerBlockTable,tetriminoManager, BLOCK_DIMENSION, VIRTUAL_WIDTH, VIRTUAL_HEIGHT)
 
@@ -164,15 +164,18 @@ function love.draw()
 
     push:apply('start')
 
+    if gameState ~= 'start' then
+        centerBlock:render()
+        tetriminoManager:render()
+    end
+
     if gameState == 'start' then
         love.graphics.setFont(titleFont)
         love.graphics.printf('Welcome To 4D Block Organizer!', 0, 10, VIRTUAL_WIDTH, 'center')
         love.graphics.printf('Press Enter Or Return To Start!', 0, 20, VIRTUAL_WIDTH, 'center')
     elseif gameState == 'play' then
-        centerBlock:render()
         love.graphics.setFont(scoreFont)
         love.graphics.printf("Score: " .. tostring(scoreDisplay), 0, 5, VIRTUAL_WIDTH, 'left')
-        tetriminoManager:render()
     elseif gameState == 'pause' then
         love.graphics.setFont(titleFont)
         love.graphics.printf('The Game Is Paused, You Are Safe', 0, 10, VIRTUAL_WIDTH, 'center')
