@@ -105,7 +105,7 @@ end
 function CenterBlock:render()
     for D1, color in pairs(centerBlockTable) do
         local D2 = util:parseCoords(D1)
-        love.graphics.setColor(1,0,0,1)
+        love.graphics.setColor(util:unpack(color))
         love.graphics.rectangle('fill', D2.x, D2.y, self.width, self.height)
     end
 end 
