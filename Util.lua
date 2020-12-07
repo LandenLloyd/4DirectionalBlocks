@@ -73,12 +73,18 @@ function Util:adjacentElements(table1, table2)
         if key + 1 > maxCoord then right = key else right = key + 1 end
         if otherTable[right] ~= nil then return true end
 
-        if key - 80 < minCoord then up = key else up = key - 80 end
+        if key - VIRTUAL_WIDTH < minCoord then up = key else up = key - VIRTUAL_WIDTH end
         if otherTable[up] ~= nil then return true end
 
-        if key + 80 > maxCoord then down = key else down = key + 80 end
+        if key + VIRTUAL_WIDTH > maxCoord then down = key else down = key + VIRTUAL_WIDTH end
         if otherTable[down] ~= nil then return true end
 
+        love.graphics.setColor(1, 0, 0, 1)
+        love.graphics.printf(tostring(key), 0, 10, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf(tostring(left), 0, 20, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf(tostring(right), 0, 30, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf(tostring(up), 0, 40, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf(tostring(down), 0, 50, VIRTUAL_WIDTH, 'center')
     end
 
     -- If we make it past the for loop then no adjacencies detected
