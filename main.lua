@@ -37,16 +37,14 @@ function love.load()
 
     love.window.setTitle('4D-Block-Organizer')
 
-    fonts = {
-        --Note that these font sizes should not be final
-        --['titleFont'] = love.graphics.newFont('assets/titleFont.ttf', 8),
-        --['scoreFont'] = love.graphics.newFont('assets/scoreFont.ttf', 8)
-    }
-
-    --love.graphics.setFont(fonts['titleFont'])
+    titleFont = love.graphics.newFont('assets/font.ttf', 10)
+    scoreFont = love.graphics.newFont('assets/font.ttf', 8)
+    love.graphics.setFont(scoreFont)
 
     sounds = {
-        --['backgroundMusic'] = love.audio.newSource('assets/backgroundMusic.wav', 'staic')
+        ['backgroundMusic'] = love.audio.newSource('assets/backgroundMusic.mp3', 'static'),
+        ['backgroundMusic2'] = love.audio.newSource('assets/backgroundMusic2.mp3', 'static'),
+        ['offScreen'] = love.audio.newSource('assets/offScreen.mp3', 'static')
     }
 
     -- A table for storing the position of the current tetrimino
@@ -75,8 +73,8 @@ function love.load()
 
     gameState = 'start'
 
-    --sounds['backgroundMusic']:setLooping(true)
-    --sounds['backgroundMusic']:play()
+    sounds['backgroundMusic']:setLooping(true)
+    sounds['backgroundMusic']:play()
 end
 
 function love.resize(w, h)
@@ -87,9 +85,9 @@ function love.update(dt)
     timeElapsed = timeElapsed + dt
 
     if gameState == 'pause' then
-        --sounds['backgroundMusic']:pause()
+        sounds['backgroundMusic']:pause()
     else
-        --sounds['backgroundMusic']:play()
+        sounds['backgroundMusic']:play()
     end
 
     if timeElapsed > gameSpeed then
@@ -165,22 +163,22 @@ function love.draw()
 
     push:apply('start')
     if gameState == 'start' then
-        --love.graphics.setFont(fonts['titleFont'])
+        love.graphics.setFont(titleFont)
         love.graphics.printf('Welcome To 4D Block Organizer!', 0, 10, VIRTUAL_WIDTH, 'center')
         love.graphics.printf('Press Enter Or Return To Start!', 0, 20, VIRTUAL_WIDTH, 'center')
     elseif gameState == 'play' then
         centerBlock:render()
-        --love.graphics.setFont('scoreFont')
+        --love.graphics.setFont(scoreFont)
         --love.graphics.printf(tostring(displayScore), 0, 5, VIRTUAL_WIDTH, 'left')
         tetriminoManager:render()
     elseif gameState == 'pause' then
-        love.graphics.setFont('titleFont')
-        love.graphics.printf('The Game Is Paused, You Are Safe', 0, 10, VIRTUAL_WIDTH, 'center')
-        love.graphics.printf('Press Enter Or Return To Resume!', 0, 20, VIRTUAL_WIDTH, 'center')
+        --love.graphics.setFont(titleFont)
+        --love.graphics.printf('The Game Is Paused, You Are Safe', 0, 10, VIRTUAL_WIDTH, 'center')
+        --love.graphics.printf('Press Enter Or Return To Resume!', 0, 20, VIRTUAL_WIDTH, 'center')
     elseif gameState == 'end' then
-        --love.graphics.setFont('titleFont')
-        love.graphics.printf('Game Over!', 0, 10, VIRTUAL_WIDTH, 'center')
-        --love.graphics.setFont('scoreFont')
+        --love.graphics.setFont(titleFont)
+        --love.graphics.printf('Game Over!', 0, 10, VIRTUAL_WIDTH, 'center')
+        --love.graphics.setFont(scoreFont)
         --love.graphics.printf('Score: ' .. tostring(displayScore), 0, 20, VIRTUAL_WIDTH, 'center')
     end
 
