@@ -184,6 +184,17 @@ function love.draw()
         --love.graphics.printf('Score: ' .. tostring(displayScore), 0, 20, VIRTUAL_WIDTH, 'center')
     end
 
+    local y_print = 10
+    for key, value in pairs(tetriminoTable) do
+        love.graphics.printf('Tetrimino: ' .. tostring(key), 0, y_print, VIRTUAL_WIDTH, 'right')
+        y_print = y_print + 10 
+    end
+    for key, value in pairs(centerBlockTable) do
+         love.graphics.printf('CenterBlock: ' .. tostring(key), 0, y_print, VIRTUAL_WIDTH, 'right')
+         y_print = y_print + 10
+     end
+
+
     push:apply('end')
 
 end

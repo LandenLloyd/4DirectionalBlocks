@@ -61,17 +61,10 @@ function CenterBlock:right()
 end
 
 function CenterBlock:rotate()
-    centerBlockTable = util:rotate(centerBlockTable, self.px, self.py)
+    centerBlockTable = util:rotateTable(centerBlockTable, self.px, self.py)
 end
 
 function CenterBlock:handleCollisions()
-    tetriminoTable = tetriminoManager:getTable()
-    -- starttest
-    local printx = 0
-    for key, value in pairs(tetriminoTable) do
-        love.graphics.printf(tostring(key), printx, 20, VIRTUAL_WIDTH, 'center')
-    end
-    -- endtest
     if util:adjacentElements(tetriminoTable, centerBlockTable) then
         centerBlockTable = util:mergeTables(tetriminoTable, centerBlockTable)
         tetriminoManager:reset()
@@ -108,7 +101,6 @@ end
 function CenterBlock:render()
     for D1, color in pairs(centerBlockTable) do
         local D2 = util:parseCoords(D1)
-        love.graphics.printf('1d:' .. tostring(D1) .. 'X:' .. tostring(D2.x) .. 'Y:' .. tostring(D2.y), 0, 10, VIRTUAL_WIDTH, 'center')
         love.graphics.setColor(1,0,0,1)
         love.graphics.rectangle('fill', D2.x, D2.y, self.width, self.height)
     end

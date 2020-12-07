@@ -29,6 +29,8 @@ function TetriminoManager:init(util, centerBlockTable, tetriminoTable)
     -- 'T' is 7
     self.shape = 1
 
+    -- We initialize the table from the start 
+
     -- this is for resetting self.shape angle
     self.resetShapeAngle = false
 
@@ -41,7 +43,7 @@ end
 
 function TetriminoManager:update(dt)
     if self.side == 1 then -- 1 is up
-        -- if we reach the edge of the screen,
+        -- if we reach the edge of the screen
         -- go back to start
         if self.y > VIRTUAL_HEIGHT - self.block then
             tetriminoManager:reset()
@@ -51,7 +53,7 @@ function TetriminoManager:update(dt)
         end
 
     elseif self.side == 2 then -- 2 is right
-        -- if we reach the edge of the screen,
+        -- if we reach the edge of the screen
         -- go back to start
         if self.x < 0 then
             tetriminoManager:reset()
@@ -61,7 +63,7 @@ function TetriminoManager:update(dt)
         end
     
     elseif self.side == 3 then -- 3 is bottom
-        -- if we reach the edge of the screen,
+        -- if we reach the edge of the screen
         -- go back to start
         if self.y < 0 then
             tetriminoManager:reset()
@@ -71,7 +73,7 @@ function TetriminoManager:update(dt)
         end
     
     elseif self.side == 4 then -- 4 is left
-        -- if we reach the edge of the screen,
+        -- if we reach the edge of the screen
         -- go back to start
         if self.x > VIRTUAL_WIDTH - self.block then
             tetriminoManager:reset()
@@ -83,8 +85,6 @@ function TetriminoManager:update(dt)
 end
 
 function TetriminoManager:render()
-    -- test code
-    love.graphics.printf(tostring(self.x ) .. ' ' .. tostring(self.y ) .. ' ' .. tostring(self.side), 0, 30, VIRTUAL_WIDTH, 'center')
     tetriminoManager:shapes()
 end
 
@@ -187,10 +187,10 @@ function TetriminoManager:shapes()
             love.graphics.rectangle('fill', self.x + (self.block + self.blockDst), self.y + (self.block + self.blockDst), self.block, self.block)
             love.graphics.rectangle('fill', self.x, self.y + (self.block + self.blockDst), self.block, self.block)
 
-            positionsTable = {[self.x  + (self.block * 2) + (2 * self.blockDst)] = self.y,
-                              [self.x + (self.block + self.blockDst)] = self.y,
-                              [self.x + (self.block + self.blockDst)] = self.y + (self.block + self.blockDst),
-                              [self.x] = self.y + (self.block + self.blockDst)}
+            tetriminoTable = {[util:toCoords({self.x  + (self.block * 2) + (2 * self.blockDst), self.y})] = tetriminoColor,
+                              [util:toCoords({self.x + (self.block + self.blockDst), self.y})] = tetriminoColor,
+                              [util:toCoords({self.x + (self.block + self.blockDst), self.y + (self.block + self.blockDst)})] = tetriminoColor,
+                              [util:toCoords({self.x, self.y + (self.block + self.blockDst)})] = tetriminoColor}
         else 
             --*---
             --**--
@@ -200,10 +200,10 @@ function TetriminoManager:shapes()
             love.graphics.rectangle('fill', self.x + (self.block + self.blockDst), self.y + (self.block + self.blockDst), self.block, self.block)
             love.graphics.rectangle('fill', self.x + (self.block + self.blockDst), self.y + (self.block * 2) + (2 * self.blockDst), self.block, self.block)
 
-            positionsTable = {[self.x] = self.y,
-                              [self.x] = self.y + (self.block + self.blockDst),
-                              [self.x + (self.block + self.blockDst)] = self.y,
-                              [self.x + (self.block + self.blockDst)] = self.y + (self.block * 2) + (2 * self.blockDst)}
+            tetriminoTable = {[util:toCoords({self.x, self.y})] = tetriminoColor,
+                              [util:toCoords({self.x, self.y + (self.block + self.blockDst)})] = tetriminoColor,
+                              [util:toCoords({self.x + (self.block + self.blockDst), self.y})] = tetriminoColor,
+                              [util:toCoords({self.x + (self.block + self.blockDst), self.y + (self.block * 2) + (2 * self.blockDst)})] = tetriminoColor}
         end
 
     elseif self.shape == 2 then -- 'Z' is 2
@@ -223,10 +223,10 @@ function TetriminoManager:shapes()
             love.graphics.rectangle('fill', self.x + (self.block + self.blockDst), self.y + (self.block + self.blockDst), self.block, self.block)
             love.graphics.rectangle('fill', self.x + (self.block * 2) + (2 * self.blockDst), self.y + (self.block + self.blockDst), self.block, self.block)
 
-            positionsTable = {[self.x] = self.y,
-                              [self.x + (self.block + self.blockDst)] = self.y,
-                              [self.x + (self.block + self.blockDst)] = self.y + (self.block + self.blockDst),
-                              [self.x + (self.block * 2) + (2 * self.blockDst)] = self.y + (self.block + self.blockDst)}
+            tetriminoTable = {[util:toCoords({self.x, self.y})] = tetriminoColor,
+                              [util:toCoords({self.x + (self.block + self.blockDst), self.y})] = tetriminoColor,
+                              [util:toCoords({self.x + (self.block + self.blockDst), self.y + (self.block + self.blockDst)})] = tetriminoColor,
+                              [util:toCoords({self.x + (self.block * 2) + (2 * self.blockDst), self.y + (self.block + self.blockDst)})] = tetriminoColor}
         else 
             ---*--
             --**--
@@ -236,10 +236,10 @@ function TetriminoManager:shapes()
             love.graphics.rectangle('fill', self.x, self.y + (self.block + self.blockDst), self.block, self.block)
             love.graphics.rectangle('fill', self.x, self.y + (self.block * 2) + (2 * self.blockDst), self.block, self.block)
 
-            positionsTable = {[self.x + (self.block + self.blockDst)] = self.y,
-                              [self.x + (self.block + self.blockDst)] = self.y + (self.block + self.blockDst),
-                              [self.x] = self.y + (self.block + self.blockDst),
-                              [self.x] = self.y + (self.block * 2) + (2 * self.blockDst)}
+            tetriminoTable = {[util:toCoords({self.x + (self.block + self.blockDst), self.y})] = tetriminoColor,
+                              [util:toCoords({self.x + (self.block + self.blockDst), self.y + (self.block + self.blockDst)})] = tetriminoColor,
+                              [util:toCoords({self.x, self.y + (self.block + self.blockDst)})] = tetriminoColor,
+                              [util:toCoords({self.x, self.y + (self.block * 2) + (2 * self.blockDst)})] = tetriminoColor}
         end
 
     elseif self.shape == 3 then -- 'J' is 3
@@ -260,10 +260,10 @@ function TetriminoManager:shapes()
             love.graphics.rectangle('fill', self.x + (self.block + self.blockDst), self.y + (self.block * 2) + (2 * self.blockDst), self.block, self.block)
             love.graphics.rectangle('fill', self.x, self.y + (self.block * 2) + (2 * self.blockDst), self.block, self.block)
 
-            positionsTable = {[self.x + (self.block + self.blockDst)] = self.y,
-                              [self.x + (self.block + self.blockDst)] = self.y + (self.block + self.blockDst),
-                              [self.x + (self.block + self.blockDst)] = self.y + (self.block * 2) + (2 * self.blockDst),
-                              [self.x] = self.y + (self.block * 2) + (2 * self.blockDst)}
+            tetriminoTable = {[util:toCoords({self.x + (self.block + self.blockDst), self.y})] = tetriminoColor,
+                              [util:toCoords({self.x + (self.block + self.blockDst), self.y + (self.block + self.blockDst)})] = tetriminoColor,
+                              [util:toCoords({self.x + (self.block + self.blockDst), self.y + (self.block * 2) + (2 * self.blockDst)})] = tetriminoColor,
+                              [util:toCoords({self.x, self.y + (self.block * 2) + (2 * self.blockDst)})] = tetriminoColor}
         elseif j == 2 then
             --**--
             --*---
@@ -273,10 +273,10 @@ function TetriminoManager:shapes()
             love.graphics.rectangle('fill', self.x, self.y + (self.block + self.blockDst), self.block, self.block)
             love.graphics.rectangle('fill', self.x, self.y + (self.block * 2) + (2 * self.blockDst), self.block, self.block)
 
-            positionsTable = {[self.x] = self.y,
-                              [self.x + (self.block + self.blockDst)] = self.y,
-                              [self.x] = self.y + (self.block + self.blockDst),
-                              [self.x] = self.y + (self.block * 2) + (2 * self.blockDst)}
+            tetriminoTable = {[util:toCoords({self.x, self.y})] = tetriminoColor,
+                              [util:toCoords({self.x + (self.block + self.blockDst), self.y})] = tetriminoColor,
+                              [util:toCoords({self.x, self.y + (self.block + self.blockDst)})] = tetriminoColor,
+                              [util:toCoords({self.x, self.y + (self.block * 2) + (2 * self.blockDst)})] = tetriminoColor}
         elseif j == 3 then
             --***--
             ----*--
@@ -285,10 +285,10 @@ function TetriminoManager:shapes()
             love.graphics.rectangle('fill', self.x + (self.block * 2) + (2 * self.blockDst), self.y, self.block, self.block)
             love.graphics.rectangle('fill', self.x + (self.block * 2) + (2 * self.blockDst), self.y + (self.block + self.blockDst), self.block, self.block)
 
-            positionsTable = {[self.x] = self.y,
-                              [self.x + (self.block + self.blockDst)] = self.y,
-                              [self.x + (self.block * 2) + (2 * self.blockDst)] = self.y,
-                              [self.x + (self.block * 2) + (2 * self.blockDst)] = self.y + (self.block + self.blockDst)}
+            tetriminoTable = {[util:toCoords({self.x, self.y})] = tetriminoColor,
+                              [util:toCoords({self.x + (self.block + self.blockDst), self.y})] = tetriminoColor,
+                              [util:toCoords({self.x + (self.block * 2) + (2 * self.blockDst), self.y})] = tetriminoColor,
+                              [util:toCoords({self.x + (self.block * 2) + (2 * self.blockDst), self.y + (self.block + self.blockDst)})] = tetriminoColor}
         else
             --*----
             --***--
@@ -297,10 +297,10 @@ function TetriminoManager:shapes()
             love.graphics.rectangle('fill', self.x + (self.block + self.blockDst), self.y + (self.block + self.blockDst), self.block, self.block)
             love.graphics.rectangle('fill', self.x + (self.block * 2) + (2 * self.blockDst), self.y + (self.block + self.blockDst), self.block, self.block)
 
-            positionsTable = {[self.x] = self.y,
-                              [self.x] = self.y + (self.block + self.blockDst),
-                              [self.x + (self.block + self.blockDst)] = self.y + (self.block + self.blockDst),
-                              [self.x + (self.block * 2) + (2 * self.blockDst)] = self.y + (self.block + self.blockDst)}
+            tetriminoTable = {[util:toCoords({self.x, self.y})] = tetriminoColor,
+                              [util:toCoords({self.x, self.y + (self.block + self.blockDst)})] = tetriminoColor,
+                              [util:toCoords({self.x + (self.block + self.blockDst), self.y + (self.block + self.blockDst)})] = tetriminoColor,
+                              [util:toCoords({self.x + (self.block * 2) + (2 * self.blockDst), self.y + (self.block + self.blockDst)})] = tetriminoColor}
         end
  
     elseif self.shape == 4 then -- 'L' is 4
@@ -321,10 +321,10 @@ function TetriminoManager:shapes()
             love.graphics.rectangle('fill', self.x, self.y + (self.block * 2) + (2 * self.blockDst), self.block, self.block)
             love.graphics.rectangle('fill', self.x + (self.block + self.blockDst), self.y + (self.block * 2) + (2 * self.blockDst), self.block, self.block)
 
-            positionsTable = {[self.x] = self.y,
-                              [self.x] = self.y + (self.block + self.blockDst),
-                              [self.x] = self.y + (self.block * 2) + (2 * self.blockDst),
-                              [self.x + (self.block + self.blockDst)] = self.y + (self.block * 2) + (2 * self.blockDst)}
+            tetriminoTable = {[util:toCoords({self.x, self.y})] = tetriminoColor,
+                              [util:toCoords({self.x, self.y + (self.block + self.blockDst)})] = tetriminoColor,
+                              [util:toCoords({self.x, self.y + (self.block * 2) + (2 * self.blockDst)})] = tetriminoColor,
+                              [util:toCoords({self.x + (self.block + self.blockDst), self.y + (self.block * 2) + (2 * self.blockDst)})] = tetriminoColor}
         elseif l == 2 then
             --**---
             ---*---
@@ -334,10 +334,10 @@ function TetriminoManager:shapes()
             love.graphics.rectangle('fill', self.x + (self.block + self.blockDst), self.y + (self.block + self.blockDst), self.block, self.block)
             love.graphics.rectangle('fill', self.x + (self.block + self.blockDst), self.y + (self.block * 2) + (2 * self.blockDst), self.block, self.block)
 
-            positionsTable = {[self.x] = self.y,
-                              [self.x + (self.block + self.blockDst)] = self.y,
-                              [self.x + (self.block + self.blockDst)] = self.y + (self.block + self.blockDst),
-                              [self.x + (self.block + self.blockDst)] = self.y + (self.block * 2) + (2 * self.blockDst)}
+            tetriminoTable = {[util:toCoords({self.x, self.y})] = tetriminoColor,
+                              [util:toCoords({self.x + (self.block + self.blockDst), self.y})] = tetriminoColor,
+                              [util:toCoords({self.x + (self.block + self.blockDst), self.y + (self.block + self.blockDst)})] = tetriminoColor,
+                              [util:toCoords({self.x + (self.block + self.blockDst), self.y + (self.block * 2) + (2 * self.blockDst)})] = tetriminoColor}
         elseif l == 3 then
             --***--
             --*----
@@ -346,10 +346,10 @@ function TetriminoManager:shapes()
             love.graphics.rectangle('fill', self.x + (self.block * 2) + (2 * self.blockDst), self.y, self.block, self.block)
             love.graphics.rectangle('fill', self.x, self.y + (self.block + self.blockDst), self.block, self.block)
 
-            positionsTable = {[self.x] = self.y,
-                              [self.x + (self.block + self.blockDst)] = self.y,
-                              [self.x + (self.block * 2) + (2 * self.blockDst)] = self.y,
-                              [self.x] = self.y + (self.block + self.blockDst)}
+            tetriminoTable = {[util:toCoords({self.x, self.y})] = tetriminoColor,
+                              [util:toCoords({self.x + (self.block + self.blockDst), self.y})] = tetriminoColor,
+                              [util:toCoords({self.x + (self.block * 2) + (2 * self.blockDst), self.y})] = tetriminoColor,
+                              [util:toCoords({self.x, self.y + (self.block + self.blockDst)})] = tetriminoColor}
         else
             ----*--
             --***--
@@ -358,10 +358,10 @@ function TetriminoManager:shapes()
             love.graphics.rectangle('fill', self.x + (self.block + self.blockDst), self.y + (self.block + self.blockDst), self.block, self.block)
             love.graphics.rectangle('fill', self.x + (self.block * 2) + (2 * self.blockDst), self.y + (self.block + self.blockDst), self.block, self.block)
 
-            positionsTable = {[self.x + (self.block * 2) + (2 * self.blockDst)] = self.y,
-                              [self.x] = self.y + (self.block + self.blockDst),
-                              [self.x + (self.block + self.blockDst)] = self.y + (self.block + self.blockDst),
-                              [self.x + (self.block * 2) + (2 * self.blockDst)] = self.y + (self.block + self.blockDst)}
+            tetriminoTable = {[util:toCoords({self.x + (self.block * 2) + (2 * self.blockDst), self.y})] = tetriminoColor,
+                              [util:toCoords({self.x, self.y + (self.block + self.blockDst)})] = tetriminoColor,
+                              [util:toCoords({self.x + (self.block + self.blockDst), self.y + (self.block + self.blockDst)})] = tetriminoColor,
+                              [util:toCoords({self.x + (self.block * 2) + (2 * self.blockDst), self.y + (self.block + self.blockDst)})] = tetriminoColor}
         end
 
     elseif self.shape == 5 then -- 'I' is 5
@@ -383,10 +383,10 @@ function TetriminoManager:shapes()
             love.graphics.rectangle('fill', self.x, self.y + (self.block * 2) + (2 * self.blockDst), self.block, self.block)
             love.graphics.rectangle('fill', self.x, self.y + (self.block * 3) + (3 * self.blockDst), self.block, self.block)
 
-            positionsTable = {[self.x] = self.y,
-                              [self.x] = self.y + (self.block + self.blockDst),
-                              [self.x] = self.y + (self.block * 2) + (2 * self.blockDst),
-                              [self.x] = self.y + (self.block * 3) + (3 * self.blockDst)}
+            tetriminoTable = {[util:toCoords({self.x, self.y})] = tetriminoColor,
+                              [util:toCoords({self.x, self.y + (self.block + self.blockDst)})] = tetriminoColor,
+                              [util:toCoords({self.x, self.y + (self.block * 2) + (2 * self.blockDst)})] = tetriminoColor,
+                              [util:toCoords({self.x, self.y + (self.block * 3) + (3 * self.blockDst)})] = tetriminoColor}
         else 
             --****--
             love.graphics.rectangle('fill', self.x, self.y, self.block, self.block)
@@ -394,10 +394,10 @@ function TetriminoManager:shapes()
             love.graphics.rectangle('fill', self.x + (self.block * 2) + (2 * self.blockDst), self.y, self.block, self.block)
             love.graphics.rectangle('fill', self.x + (self.block * 3) + (3 * self.blockDst), self.y, self.block, self.block)
 
-            positionsTable = {[self.x] = self.y,
-                              [self.x + (self.block + self.blockDst)] = self.y,
-                              [self.x + (self.block * 2) + (2 * self.blockDst)] = self.y,
-                              [self.x + (self.block * 3) + (3 * self.blockDst)] = self.y}
+            tetriminoTable = {[util:toCoords({self.x, self.y})] = tetriminoColor,
+                              [util:toCoords({self.x + (self.block + self.blockDst), self.y})] = tetriminoColor,
+                              [util:toCoords({self.x + (self.block * 2) + (2 * self.blockDst), self.y})] = tetriminoColor,
+                              [util:toCoords({self.x + (self.block * 3) + (3 * self.blockDst), self.y})] = tetriminoColor}
         end
 
     elseif self.shape == 6 then -- 'O' is 6
@@ -411,10 +411,10 @@ function TetriminoManager:shapes()
             love.graphics.rectangle('fill', self.x, self.y + (self.block + self.blockDst), self.block, self.block)
             love.graphics.rectangle('fill', self.x +(self.block + self.blockDst), self.y + (self.block + self.blockDst), self.block, self.block)
 
-            postionsTable = {[self.x] = self.y,
-                             [self.x + (self.block + self.blockDst)] = self.y,
-                             [self.x] = self.y + (self.block + self.blockDst),
-                             [self.x +(self.block + self.blockDst)] = self.y + (self.block + self.blockDst)}
+            postionsTable = {[util:toCoords({self.x, self.y})] = tetriminoColor,
+                             [util:toCoords({self.x + (self.block + self.blockDst), self.y})] = tetriminoColor,
+                             [util:toCoords({self.x, self.y + (self.block + self.blockDst)})] = tetriminoColor,
+                             [util:toCoords({self.x +(self.block + self.blockDst), self.y + (self.block + self.blockDst)})] = tetriminoColor}
 
     elseif self.shape == 7 then -- 'T' is 7
         -- setting cyan color
@@ -433,10 +433,10 @@ function TetriminoManager:shapes()
             love.graphics.rectangle('fill', self.x + (self.block * 2) + (2 * self.blockDst), self.y, self.block, self.block)
             love.graphics.rectangle('fill', self.x + (self.block + self.blockDst), self.y + (self.block + self.blockDst), self.block, self.block)
 
-            positionsTable = {[self.x] = self.y,
-                              [self.x + (self.block + self.blockDst)] = self.y,
-                              [self.x + (self.block * 2) + (2 * self.blockDst)] = self.y,
-                              [self.x + (self.block + self.blockDst)]= self.y + (self.block + self.blockDst)}
+            tetriminoTable = {[util:toCoords({self.x, self.y})] = tetriminoColor,
+                              [util:toCoords({self.x + (self.block + self.blockDst), self.y})] = tetriminoColor,
+                              [util:toCoords({self.x + (self.block * 2) + (2 * self.blockDst), self.y})] = tetriminoColor,
+                              [util:toCoords({self.x + (self.block + self.blockDst), self.y + (self.block + self.blockDst)})] = tetriminoColor}
         elseif t == 2 then
             ---*---
             ---**--
@@ -446,10 +446,10 @@ function TetriminoManager:shapes()
             love.graphics.rectangle('fill', self.x + (self.block + self.blockDst), self.y + (self.block + self.blockDst), self.block, self.block)
             love.graphics.rectangle('fill', self.x, self.y + (self.block * 2) + (2 * self.blockDst), self.block, self.block)
 
-            positionsTable = {[self.x] = self.y,
-                              [self.x] = self.y + (self.block + self.blockDst),
-                              [self.x + (self.block + self.blockDst)] = self.y + (self.block + self.blockDst),
-                              [self.x] = self.y + (self.block * 2) + (2 * self.blockDst)}
+            tetriminoTable = {[util:toCoords({self.x, self.y})] = tetriminoColor,
+                              [util:toCoords({self.x, self.y + (self.block + self.blockDst)})] = tetriminoColor,
+                              [util:toCoords({self.x + (self.block + self.blockDst), self.y + (self.block + self.blockDst)})] = tetriminoColor,
+                              [util:toCoords({self.x, self.y + (self.block * 2) + (2 * self.blockDst)})] = tetriminoColor}
         elseif t == 3 then
             ---*--
             --**--
@@ -459,10 +459,10 @@ function TetriminoManager:shapes()
             love.graphics.rectangle('fill', self.x + (self.block + self.blockDst), self.y + (self.block + self.blockDst), self.block, self.block)
             love.graphics.rectangle('fill', self.x + (self.block + self.blockDst), self.y + (self.block * 2) + (2 * self.blockDst), self.block, self.block)
 
-            positionsTable = {[self.x + (self.block + self.blockDst)] = self.y,
-                              [self.x] = self.y + (self.block + self.blockDst),
-                              [self.x + (self.block + self.blockDst)] = self.y + (self.block + self.blockDst),
-                              [self.x + (self.block + self.blockDst)] = self.y + (self.block * 2) + (2 * self.blockDst)}
+            tetriminoTable = {[util:toCoords({self.x + (self.block + self.blockDst), self.y})] = tetriminoColor,
+                              [util:toCoords({self.x, self.y + (self.block + self.blockDst)})] = tetriminoColor,
+                              [util:toCoords({self.x + (self.block + self.blockDst), self.y + (self.block + self.blockDst)})] = tetriminoColor,
+                              [util:toCoords({self.x + (self.block + self.blockDst), self.y + (self.block * 2) + (2 * self.blockDst)})] = tetriminoColor}
         else
             ---*---
             --***--
@@ -471,22 +471,10 @@ function TetriminoManager:shapes()
             love.graphics.rectangle('fill', self.x + (self.block + self.blockDst), self.y + (self.block + self.blockDst), self.block, self.block)
             love.graphics.rectangle('fill', self.x + (self.block * 2) + (2 * self.blockDst), self.y + (self.block + self.blockDst), self.block, self.block)
 
-            positionsTable = {[self.x + (self.block + self.blockDst)] = self.y,
-                              [self.x] = self.y + (self.block + self.blockDst),
-                              [self.x + (self.block + self.blockDst)] = self.y + (self.block + self.blockDst),
-                              [self.x + (self.block * 2) + (2 * self.blockDst)] = self.y + (self.block + self.blockDst)}
+            tetriminoTable = {[util:toCoords({self.x + (self.block + self.blockDst), self.y})] = tetriminoColor,
+                              [util:toCoords({self.x, self.y + (self.block + self.blockDst)})] = tetriminoColor,
+                              [util:toCoords({self.x + (self.block + self.blockDst), self.y + (self.block + self.blockDst)})] = tetriminoColor,
+                              [util:toCoords({self.x + (self.block * 2) + (2 * self.blockDst), self.y + (self.block + self.blockDst)})] = tetriminoColor}
         end
     end
-end
-
-function TetriminoManager:getTable()
-    -- Returns a tabular representation of the tetrimino using the format described in main.lua
-
-    tetriminoTable = {}
-    for x, y in pairs(positionsTable) do
-        tetriminoTable[util:toCoords({x, y})] = tetriminoColor
-    end
-
-    return tetriminoTable
-
 end
