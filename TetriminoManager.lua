@@ -42,45 +42,17 @@ function TetriminoManager:init(util, centerBlockTable, tetriminoTable)
 end
 
 function TetriminoManager:update(dt)
-    if self.side == 1 then -- 1 is up
-        -- if we reach the edge of the screen
-        -- go back to start
-        if self.y > VIRTUAL_HEIGHT - self.block then
-            tetriminoManager:reset()
-        else
-            self.x = self.x + self.dx * dt
-            self.y = self.y + self.dy * dt
-        end
+    self.x = self.x + self.dx
+    self.y = self.y + self.dy
 
-    elseif self.side == 2 then -- 2 is right
-        -- if we reach the edge of the screen
-        -- go back to start
-        if self.x < 0 then
-            tetriminoManager:reset()
-        else
-            self.x = self.x + self.dx * dt
-            self.y = self.y + self.dy * dt
-        end
-    
-    elseif self.side == 3 then -- 3 is bottom
-        -- if we reach the edge of the screen
-        -- go back to start
-        if self.y < 0 then
-            tetriminoManager:reset()
-        else
-            self.x = self.x + self.dx * dt
-            self.y = self.y + self.dy * dt
-        end
-    
-    elseif self.side == 4 then -- 4 is left
-        -- if we reach the edge of the screen
-        -- go back to start
-        if self.x > VIRTUAL_WIDTH - self.block then
-            tetriminoManager:reset()
-        else
-            self.x = self.x + self.dx * dt
-            self.y = self.y + self.dy * dt
-        end
+    if self.x < -3 * self.blocks then
+        self:reset()
+    elseif self.x > VIRTUAL_WIDTH + 3 * self.blocks then
+        self:reset()
+    elseif self.y < -3 * self.blocks then
+        self:reset()
+    elseif self.y > VIRTUAL_HEIGHT + 3 * self.blocks then
+        self:reset()
     end
 end
 
@@ -139,10 +111,10 @@ function TetriminoManager:reset()
     
         if self.x >=0 and self.x <= 64 then
             self.dx = self.block
-            self.dy = self.block
+            self.dy = -self.block
         elseif self.x >=65 and self.x <= 128 then
             self.dx = self.block
-            self.dy = self.block
+            self.dy = -self.block
         elseif self.x >= 129 and self.x <= 192 then
             self.dx = math.random(2) and -self.block or self.block
             self.dy = -self.block
