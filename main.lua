@@ -99,16 +99,6 @@ function love.update(dt)
         timeElapsed = 0
 
         if gameState == 'play' then
-            tick = tick + 1
-            if tick >= 4 then
-                -- We want the tetrmino to move slower than the player
-                -- so the player can catch up
-                tetriminoManager:update(1)
-                tick = 0
-            end
-            -- It is important that tetriminoManager updates before centerBlock
-            -- Because centerBlock calls tetriminoManager methods
-
             -- Player controls for center block
             if love.keyboard.isDown('up') then
                 centerBlock:up()
@@ -131,6 +121,14 @@ function love.update(dt)
             end
 
             centerBlock:update(1)
+
+            tick = tick + 1
+            if tick >= 4 then
+                 -- We want the tetrmino to move slower than the player
+                 -- so the player can catch up
+                 tetriminoManager:update(1)
+                 tick = 0
+            end
         else
             -- We want the game to be predictable;
             -- so we want the game to start from the same state everytime

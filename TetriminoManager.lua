@@ -95,75 +95,75 @@ function TetriminoManager:reset()
     self.shape = math.random(1, 7) 
 
     if self.side == 1 then -- 1 is up
-        self.x = math.random(0, VIRTUAL_WIDTH - 12)
+        self.x = math.random(0, (VIRTUAL_WIDTH - 12) / self.block) * self.block
         self.y = 0
     
         if self.x >=0 and self.x <= 64 then
-            self.dx = 4
-            self.dy = 4
+            self.dx = self.block
+            self.dy = self.block
         elseif self.x >=65 and self.x <= 128 then
-            self.dx = 4
-            self.dy = 4
+            self.dx = self.block
+            self.dy = self.block
         elseif self.x >= 129 and self.x <= 192 then
-            self.dx = math.random(2) == 1 and -4 or 4
-            self.dy = 4
+            self.dx = math.random(2) == 1 and -self.block or self.block
+            self.dy = self.block
         elseif self.x >= 193 and self.x <= 257 then
-            self.dx = -4
-            self.dy = 4
+            self.dx = -self.block
+            self.dy = self.block
         elseif self.x >= 258 and self.x <= VIRTUAL_WIDTH then
-            self.dx = -4
-            self.dy = 4
+            self.dx = -self.block
+            self.dy = self.block
         end
 
     elseif self.side == 2 then -- 2 is right
         self.x = VIRTUAL_WIDTH 
-        self.y = math.random(0, VIRTUAL_HEIGHT - 12)
+        self.y = math.random(0, (VIRTUAL_HEIGHT - 12) / self.block) * self.block
     
         if self.y >=0 and self.y <= 60 then
-            self.dx = -4
-            self.dy = 4
+            self.dx = -self.block
+            self.dy = self.block
         elseif self.y >=61 and self.y <= 120 then
-            self.dx = -4
-            self.dy = math.random(2) == 1 and -4 or 4
+            self.dx = -self.block
+            self.dy = math.random(2) == 1 and -self.block or self.block
         elseif self.y >= 121 and self.y <= VIRTUAL_HEIGHT then
-            self.dx = -4
-            self.dy = -4
+            self.dx = -self.block
+            self.dy = -self.block
         end
     
     elseif self.side == 3 then -- 3 is bottom
-        self.x = math.random(0, VIRTUAL_WIDTH - 12)
+        self.x = math.random(0, (VIRTUAL_WIDTH - 12) / self.block) * self.block
         self.y = VIRTUAL_HEIGHT
     
         if self.x >=0 and self.x <= 64 then
-            self.dx = 4
-            self.dy = 4
+            self.dx = self.block
+            self.dy = self.block
         elseif self.x >=65 and self.x <= 128 then
-            self.dx = 4
-            self.dy = 4
+            self.dx = self.block
+            self.dy = self.block
         elseif self.x >= 129 and self.x <= 192 then
-            self.dx = math.random(2) and -4 or 4
-            self.dy = -4
+            self.dx = math.random(2) and -self.block or self.block
+            self.dy = -self.block
         elseif self.x >= 193 and self.x <= 257 then
-            self.dx = -4
-            self.dy = -4
+            self.dx = -self.block
+            self.dy = -self.block
         elseif self.x >= 258 and self.x <= VIRTUAL_WIDTH then
-            self.dx = -4
-            self.dy = -4
+            self.dx = -self.block
+            self.dy = -self.block
         end
     
     elseif self.side == 4 then -- 4 is left
         self.x = 0
-        self.y = math.random(0, VIRTUAL_HEIGHT - 12)
+        self.y = math.random(0, (VIRTUAL_HEIGHT - 12) / self.block) * self.block
     
         if self.y >=0 and self.y <= 60 then
-            self.dx = 4
-            self.dy = 4
+            self.dx = self.block
+            self.dy = self.block
         elseif self.y >=61 and self.y <= 120 then
-            self.dx = 100
-            self.dy = math.random(2) == 1 and -4 or 4
+            self.dx = self.block
+            self.dy = math.random(2) == 1 and -self.block or self.block
         elseif self.y >= 121 and self.y <= VIRTUAL_HEIGHT then
-            self.dx = 4
-            self.dy = 4
+            self.dx = self.block
+            self.dy = self.block
         end
     end
 end
