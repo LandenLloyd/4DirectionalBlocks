@@ -93,15 +93,6 @@ function love.update(dt)
         sounds['backgroundMusic']:play()
     end
 
-    -- Scoring system
-    if gameState == 'play' then
-        scoreDisplay = math.floor(score)
-        if centerBlock:update(1) == true then
-            score = score + 20
-            tetriminoManager:reset()
-        end
-    end
-
     if timeElapsed > gameSpeed then
         timeElapsed = 0
 
@@ -123,6 +114,12 @@ function love.update(dt)
                 centerBlock:rotate()
             end
 
+            tick = tick + 1
+            if tick >= 4 then
+                tetriminoManager:update(1)
+                tick = 0
+            end
+
             if centerBlock:outOfBounds() == true then
                 gameState = 'end'
             end
@@ -132,17 +129,7 @@ function love.update(dt)
             -- in reaction to the tetriminoes movement
             centerBlock:update(1)
 
-            tick = tick + 1
-            if tick >= 4 then
-                 -- We want the tetrmino to move slower than the player
-                 -- so the player can catch up
-                 tetriminoManager:update(1)
-                 tick = 0
-            end
-
             tetriminoManager.hasReset = false
-
-            centerBlock:update(1)
         else
             -- We want the game to be predictable;
             -- so we want the game to start from the same state everytime

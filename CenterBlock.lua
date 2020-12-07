@@ -14,7 +14,7 @@ end
 
 function CenterBlock:update(dt)
     if self:handleCollisions() == true then
-        return true
+        score = score + 20
     end    
 end
 
