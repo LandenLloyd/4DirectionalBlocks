@@ -18,46 +18,50 @@ end
 
 function CenterBlock:up()
     self.py  = self.py - BLOCK_DIMENSION
+    newCenterBlockTable = {}
     for D1, color in pairs(centerBlockTable) do
         local D2 = util:parseCoords(D1)
         D2.y = D2.y - BLOCK_DIMENSION
         local y = util:toCoords({D2.x, D2.y})
-        centerBlockTable[D1] = nil
-        centerBlockTable[y] = color
+        newCenterBlockTable[y] = color
     end
+    centerBlockTable = newCenterBlockTable
 end
 
 function CenterBlock:down()
     self.py = self.py + BLOCK_DIMENSION
+    newCenterBlockTable = {}
     for D1, color in pairs(centerBlockTable) do
         local D2 = util:parseCoords(D1)
         D2.y = D2.y + BLOCK_DIMENSION
         local y = util:toCoords({D2.x, D2.y})
-        centerBlockTable[D1] = nil
-        centerBlockTable[y] = color
+        newCenterBlockTable[y] = color
     end
+    centerBlockTable = newCenterBlockTable
 end
 
 function CenterBlock:left()
     self.px = self.px - BLOCK_DIMENSION
+    newCenterBlockTable = {}
     for D1, color in pairs(centerBlockTable) do
         local D2 = util:parseCoords(D1)
         D2.x = D2.x - BLOCK_DIMENSION
         local x = util:toCoords({D2.x, D2.y})
-        centerBlockTable[D1] = nil
-        centerBlockTable[x] = color
+        newCenterBlockTable[x] = color
     end
+    centerBlockTable = newCenterBlockTable
 end
 
 function CenterBlock:right()
     self.px = self.px + BLOCK_DIMENSION
+    newCenterBlockTable = {}
     for D1, color in pairs(centerBlockTable) do
         local D2 = util:parseCoords(D1)
         D2.x = D2.x + BLOCK_DIMENSION
         local x = util:toCoords({D2.x, D2.y})
-        centerBlockTable[D1] = nil
-        centerBlockTable[x] = color
+        newCenterBlockTable[x] = color
     end
+    centerBlockTable = newCenterBlockTable
 end
 
 function CenterBlock:rotate()

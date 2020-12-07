@@ -90,13 +90,15 @@ function love.update(dt)
         sounds['backgroundMusic']:play()
     end
 
+    if gameState == 'play' then
+        score = score + dt
+        scoreDisplay = math.floor(score)
+    end
+
     if timeElapsed > gameSpeed then
         timeElapsed = 0
 
         if gameState == 'play' then
-            score = score + dt
-            scoreDisplay = math.floor(score)
-
             tick = tick + 1
             if tick >= 4 then
                 -- We want the tetrmino to move slower than the player
@@ -145,15 +147,14 @@ end
 
 function love.keypressed(key)
     if key == 'escape' then
-        love.event.quit()
-    end 
-    if gameState ~= 'end' then
-        if key == 'escape' and gameState ~= 'pause' then
+        if gameState == 'pause' then
+            love.event.quit()
+        elseif gameState ~= 'end' and gameState ~= 'pause' then
             gameState = 'pause'
         end
     end
 
-    if (key == 'enter' or key == 'return') and gameState == 'start' then
+    if (key == 'enter' or key == 'return') and (gameState == 'start' or gameState == 'pause') then
         gameState = 'play'
     end
 
@@ -162,24 +163,25 @@ end
 function love.draw()
 
     push:apply('start')
+
     if gameState == 'start' then
         love.graphics.setFont(titleFont)
         love.graphics.printf('Welcome To 4D Block Organizer!', 0, 10, VIRTUAL_WIDTH, 'center')
         love.graphics.printf('Press Enter Or Return To Start!', 0, 20, VIRTUAL_WIDTH, 'center')
     elseif gameState == 'play' then
         centerBlock:render()
-        --love.graphics.setFont(scoreFont)
-        --love.graphics.printf(tostring(displayScore), 0, 5, VIRTUAL_WIDTH, 'left')
+        love.graphics.setFont(scoreFont)
+        love.graphics.printf("Score: " .. tostring(scoreDisplay), 0, 5, VIRTUAL_WIDTH, 'left')
         tetriminoManager:render()
     elseif gameState == 'pause' then
-        --love.graphics.setFont(titleFont)
-        --love.graphics.printf('The Game Is Paused, You Are Safe', 0, 10, VIRTUAL_WIDTH, 'center')
-        --love.graphics.printf('Press Enter Or Return To Resume!', 0, 20, VIRTUAL_WIDTH, 'center')
+        love.graphics.setFont(titleFont)
+        love.graphics.printf('The Game Is Paused, You Are Safe', 0, 10, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf('Press Enter Or Return To Resume!', 0, 20, VIRTUAL_WIDTH, 'center')
     elseif gameState == 'end' then
-        --love.graphics.setFont(titleFont)
-        --love.graphics.printf('Game Over!', 0, 10, VIRTUAL_WIDTH, 'center')
-        --love.graphics.setFont(scoreFont)
-        --love.graphics.printf('Score: ' .. tostring(displayScore), 0, 20, VIRTUAL_WIDTH, 'center')
+        love.graphics.setFont(titleFont)
+        love.graphics.printf('Game Over!', 0, 10, VIRTUAL_WIDTH, 'center')
+        love.graphics.setFont(scoreFont)
+        love.graphics.printf('Score: ' .. tostring(scoreDisplay), 0, 20, VIRTUAL_WIDTH, 'center')
     end
 
     local y_print = 10
@@ -190,7 +192,7 @@ function love.draw()
     for key, value in pairs(centerBlockTable) do
          love.graphics.printf('CenterBlock: ' .. tostring(key), 0, y_print, VIRTUAL_WIDTH, 'right')
          y_print = y_print + 10
-     end
+    end
 
 
     push:apply('end')
