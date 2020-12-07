@@ -45,13 +45,13 @@ function TetriminoManager:update(dt)
     self.x = self.x + self.dx
     self.y = self.y + self.dy
 
-    if self.x < -3 * self.blocks then
+    if self.x < -3 * self.block then
         self:reset()
-    elseif self.x > VIRTUAL_WIDTH + 3 * self.blocks then
+    elseif self.x > VIRTUAL_WIDTH + 3 * self.block then
         self:reset()
-    elseif self.y < -3 * self.blocks then
+    elseif self.y < -3 * self.block then
         self:reset()
-    elseif self.y > VIRTUAL_HEIGHT + 3 * self.blocks then
+    elseif self.y > VIRTUAL_HEIGHT + 3 * self.block then
         self:reset()
     end
 end
