@@ -120,6 +120,9 @@ function love.update(dt)
                 gameState = 'end'
             end
 
+            -- centerBlock:update(1) only handles collisions
+            -- we need to call twice; once in reaction to the player's movement and another time
+            -- in reaction to the tetriminoes movement
             centerBlock:update(1)
 
             tick = tick + 1
@@ -129,6 +132,8 @@ function love.update(dt)
                  tetriminoManager:update(1)
                  tick = 0
             end
+
+            centerBlock:update(1)
         else
             -- We want the game to be predictable;
             -- so we want the game to start from the same state everytime
