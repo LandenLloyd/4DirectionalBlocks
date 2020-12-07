@@ -84,11 +84,11 @@ function CenterBlock:outOfBounds()
     for D1 in pairs(centerBlockTable) do
         local D2 = util:parseCoords(D1)
 
-        if D2.x < 0 then
+        if D2.y < 0 then
             return true
         end
     
-        if D2.x > VIRTUAL_WIDTH then
+        if D2.y > VIRTUAL_HEIGHT then
             return true
         end
     
