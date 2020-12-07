@@ -177,10 +177,17 @@ function love.draw()
         tetriminoManager:render()
     end
 
+    -- We like white font
+    love.graphics.setColor(1, 1, 1, 1)
+
     if gameState == 'start' then
         love.graphics.setFont(titleFont)
         love.graphics.printf('Welcome To 4D Block Organizer!', 0, 10, VIRTUAL_WIDTH, 'center')
         love.graphics.printf('Press Enter Or Return To Start!', 0, 20, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf('You gain control of blocks you collide with.', 0, 40, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf('But you lose if you go off screen...', 0, 50, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf('Use WASD to move, and space to rotate right.', 0, 60, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf('Build the largest block you can!!!', 0, 70, VIRTUAL_WIDTH, 'center')
     elseif gameState == 'play' then
         love.graphics.setFont(scoreFont)
         love.graphics.printf("Score: " .. tostring(scoreDisplay), 0, 5, VIRTUAL_WIDTH, 'left')
@@ -188,6 +195,7 @@ function love.draw()
         love.graphics.setFont(titleFont)
         love.graphics.printf('The Game Is Paused, You Are Safe', 0, 10, VIRTUAL_WIDTH, 'center')
         love.graphics.printf('Press Enter Or Return To Resume!', 0, 20, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf('Or press escape to quit the game.', 0, 30, VIRTUAL_WIDTH, 'center')
     elseif gameState == 'end' then
         love.graphics.setFont(titleFont)
         love.graphics.printf('Game Over!', 0, 10, VIRTUAL_WIDTH, 'center')
