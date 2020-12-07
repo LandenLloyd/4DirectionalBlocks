@@ -39,6 +39,9 @@ function TetriminoManager:init(util, centerBlockTable, tetriminoTable)
 
     -- distance between self.blocks
     self.blockDst = 0
+
+    -- so we don't get wierd multiple reset cases
+    self.hasReset = false
 end
 
 function TetriminoManager:update(dt)
@@ -62,6 +65,15 @@ end
 
 -- resets tetromino
 function TetriminoManager:reset()
+    if self.hasReset then
+        return
+    else
+        self.hasReset = true
+    end
+
+    -- Lose points if blocks go off screen
+    score = score - 10
+
     self.resetShapeAngle = true
     self.side = math.random(1, 4) 
     self.shape = math.random(1, 7) 
@@ -141,6 +153,9 @@ function TetriminoManager:reset()
             self.dy = self.block
         end
     end
+
+    -- Because we were having double-counting errors
+    self:update(1)
 end
 
 -- defining shapes

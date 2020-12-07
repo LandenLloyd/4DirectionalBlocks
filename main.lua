@@ -23,7 +23,7 @@ BLOCK_DIMENSION = 4
 
 -- Because score is based on time which is often fractional,
 -- we dispaly a second variable that is certainly an integer
-local score = 0
+score = 0
 local scoreDisplay = score
 
 -- Variables for controlling the flow of the game
@@ -93,10 +93,12 @@ function love.update(dt)
         sounds['backgroundMusic']:play()
     end
 
+    -- Scoring system
     if gameState == 'play' then
         scoreDisplay = math.floor(score)
         if centerBlock:update(1) == true then
-            score = score + 10
+            score = score + 20
+            tetriminoManager:reset()
         end
     end
 
@@ -138,10 +140,9 @@ function love.update(dt)
                  tick = 0
             end
 
+            tetriminoManager.hasReset = false
+
             centerBlock:update(1)
-            if centerBlock:update(1) == true then
-                score = score + 10
-            end
         else
             -- We want the game to be predictable;
             -- so we want the game to start from the same state everytime
