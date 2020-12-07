@@ -14,6 +14,9 @@ end
 
 function CenterBlock:update(dt)
     self:handleCollisions()
+    if self:handleCollisions() == true then
+        return true
+    end    
 end
 
 function CenterBlock:up()
@@ -72,6 +75,7 @@ function CenterBlock:handleCollisions()
     if util:adjacentElements(tetriminoTable, centerBlockTable) then
         centerBlockTable = util:mergeTables(tetriminoTable, centerBlockTable)
         tetriminoManager:reset()
+        return true
     end
 end
 
