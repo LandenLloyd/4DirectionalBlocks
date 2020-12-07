@@ -28,7 +28,7 @@ local scoreDisplay = score
 
 -- Variables for controlling the flow of the game
 local timeElapsed = 0
-local gameSpeed = 0.25
+local gameSpeed = 0.15
 local minGameSpeed = 0.05
 
 function love.load()

@@ -13,7 +13,6 @@ function CenterBlock:init(util, centerBlockTable, tetriminoManager, BLOCK_DIMENS
 end
 
 function CenterBlock:update(dt)
-    self:handleCollisions()
     if self:handleCollisions() == true then
         return true
     end    
