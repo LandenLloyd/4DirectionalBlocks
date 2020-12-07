@@ -201,6 +201,7 @@ function love.draw()
         love.graphics.setFont(titleFont)
         love.graphics.printf('Game Over!', 0, 10, VIRTUAL_WIDTH, 'center')
         sounds['backgroundMusic']:stop()
+        sounds['offScreen']:play()
         love.graphics.setFont(scoreFont)
         love.graphics.printf('Score: ' .. tostring(scoreDisplay), 0, 20, VIRTUAL_WIDTH, 'center')
     end
