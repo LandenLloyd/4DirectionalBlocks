@@ -32,6 +32,8 @@ local minGameSpeed = 0.05
 
 local endLoopPlayed = false
 
+local keyPresses = {}
+
 function love.load()
 
     love.graphics.setDefaultFilter('nearest', 'nearest')
@@ -97,19 +99,19 @@ function love.update(dt)
 
         if gameState == 'play' then
             -- Player controls for center block
-            if love.keyboard.isDown('up') then
+            if keyPresses['up'] ~= nil then
                 centerBlock:up()
-            elseif love.keyboard.isDown('down') then
+            elseif keyPresses['down'] ~= nil then
                 centerBlock:down()
             end
 
-            if love.keyboard.isDown('left') then
+            if keyPresses['left'] ~= nil then
                 centerBlock:left()
-            elseif love.keyboard.isDown('right') then
+            elseif keyPresses['right'] ~= nil then
                 centerBlock:right()
             end
 
-            if love.keyboard.isDown('space') then
+            if keyPresses['space'] ~= nil then
                 centerBlock:rotate()
             end
 
@@ -124,9 +126,6 @@ function love.update(dt)
                 tetriminoManager:update(1)
                 tick = 0
             end
-
-            -- centerBlock:update(1) only handles collisions
-            centerBlock:update(1)
 
             tetriminoManager.hasReset = false
         else
@@ -143,6 +142,9 @@ function love.update(dt)
 end
 
 function love.keypressed(key)
+    keyPresses = {}
+    keyPresses[key] = true
+
     if key == 'escape' then
         if gameState == 'pause' or gameState == 'end' then
             love.event.quit()
