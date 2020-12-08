@@ -113,6 +113,7 @@ function love.update(dt)
 
             if keyPresses['space'] ~= nil then
                 centerBlock:rotate()
+                keyPresses['space'] = nil
             end
 
             if centerBlock:outOfBounds() == true then
@@ -142,7 +143,14 @@ function love.update(dt)
 end
 
 function love.keypressed(key)
-    keyPresses = {}
+    -- Resetting mutually exclusive keys
+    if key == 'left' or key == 'right' or key == 'up' or key == 'down' then
+        keyPresses['left'] = nil
+        keyPresses['right'] = nil
+        keyPresses['down'] = nil
+        keyPresses['up'] = nil
+    end
+
     keyPresses[key] = true
 
     if key == 'escape' then
@@ -179,6 +187,7 @@ function love.draw()
         love.graphics.printf('But you lose if you go off screen...', 0, 50, VIRTUAL_WIDTH, 'center')
         love.graphics.printf('Use WASD to move, and space to rotate right.', 0, 60, VIRTUAL_WIDTH, 'center')
         love.graphics.printf('Build the largest block you can!!!', 0, 70, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf('Do not let blocks go off screen!', 0, 80, VIRTUAL_WIDTH, 'center')
     elseif gameState == 'play' then
         love.graphics.setFont(scoreFont)
         love.graphics.printf("Score: " .. tostring(score), 0, 5, VIRTUAL_WIDTH, 'left')
