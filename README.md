@@ -1,6 +1,6 @@
 CIS 1051 Final Project by Rob Butaev, Landen Lloyd, Kristin Wieland.
 
-Video link: https://temple.zoom.us/rec/play/LnJYpifjNnRgogO_A2__T2h0rR1EowEo3yO9CtBAlb26IqdPqwsfwwEQW5M8Nmc1IvgLXqujaW6l_RRe.VLOwK7IxnxecyW5k?startTime=1607394546000
+Video link: https://www.youtube.com/watch?v=Q0JtII9YC9g&ab_channel=LandenLloyd
 
 Problems:
 1. Lua Scope:
