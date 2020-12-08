@@ -193,7 +193,7 @@ function TetriminoManager:shapes()
 
             tetriminoTable = {[util:toCoords({self.x, self.y})] = tetriminoColor,
                               [util:toCoords({self.x, self.y + (self.block + self.blockDst)})] = tetriminoColor,
-                              [util:toCoords({self.x + (self.block + self.blockDst), self.y})] = tetriminoColor,
+                              [util:toCoords({self.x + (self.block + self.blockDst), self.y + (self.block + self.blockDst)})] = tetriminoColor,
                               [util:toCoords({self.x + (self.block + self.blockDst), self.y + (self.block * 2) + (2 * self.blockDst)})] = tetriminoColor}
         end
 
