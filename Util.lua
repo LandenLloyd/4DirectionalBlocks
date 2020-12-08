@@ -74,12 +74,11 @@ function Util:adjacentElements(table1, table2)
         if key + self.BLOCK_DIMENSION > maxCoord then right = key else right = key + self.BLOCK_DIMENSION end
         if otherTable[right] ~= nil then return true end
 
-        if key - VIRTUAL_WIDTH < minCoord then up = key else up = key - VIRTUAL_WIDTH end
+        if key - self.VIRTUAL_WIDTH * self.BLOCK_DIMENSION < minCoord then up = key else up = key - self.VIRTUAL_WIDTH * self.BLOCK_DIMENSION end
         if otherTable[up] ~= nil then return true end
 
-        if key + VIRTUAL_WIDTH > maxCoord then down = key else down = key + VIRTUAL_WIDTH end
+        if key + self.VIRTUAL_WIDTH * self.BLOCK_DIMENSION > maxCoord then down = key else down = key + self.VIRTUAL_WIDTH * self.BLOCK_DIMENSION end
         if otherTable[down] ~= nil then return true end
-
     end
 
     -- If we make it past the for loop then no adjacencies detected
