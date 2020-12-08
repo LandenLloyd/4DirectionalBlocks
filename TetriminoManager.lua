@@ -402,7 +402,7 @@ function TetriminoManager:shapes()
             love.graphics.rectangle('fill', self.x, self.y + (self.block + self.blockDst), self.block, self.block)
             love.graphics.rectangle('fill', self.x +(self.block + self.blockDst), self.y + (self.block + self.blockDst), self.block, self.block)
 
-            postionsTable = {[util:toCoords({self.x, self.y})] = tetriminoColor,
+            tetriminoTable = {[util:toCoords({self.x, self.y})] = tetriminoColor,
                              [util:toCoords({self.x + (self.block + self.blockDst), self.y})] = tetriminoColor,
                              [util:toCoords({self.x, self.y + (self.block + self.blockDst)})] = tetriminoColor,
                              [util:toCoords({self.x +(self.block + self.blockDst), self.y + (self.block + self.blockDst)})] = tetriminoColor}
