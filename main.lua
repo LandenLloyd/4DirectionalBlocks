@@ -40,7 +40,7 @@ function love.load()
 
     love.window.setTitle('4D-Block-Organizer')
 
-    titleFont = love.graphics.newFont('assets/font.ttf', 10)
+    titleFont = love.graphics.newFont('assets/font.ttf', 11)
     scoreFont = love.graphics.newFont('assets/font.ttf', 8)
     love.graphics.setFont(scoreFont)
 
@@ -185,7 +185,7 @@ function love.draw()
         love.graphics.printf('Press Enter Or Return To Start!', 0, 20, VIRTUAL_WIDTH, 'center')
         love.graphics.printf('You gain control of blocks you collide with.', 0, 40, VIRTUAL_WIDTH, 'center')
         love.graphics.printf('But you lose if you go off screen...', 0, 50, VIRTUAL_WIDTH, 'center')
-        love.graphics.printf('Use arrow keys to move, space to rotate right.', 0, 60, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf('Arrow keys to move, space to rotate right.', 0, 60, VIRTUAL_WIDTH, 'center')
         love.graphics.printf('Build the largest block you can!!!', 0, 70, VIRTUAL_WIDTH, 'center')
         love.graphics.printf('Do not let blocks go off screen!', 0, 80, VIRTUAL_WIDTH, 'center')
     elseif gameState == 'play' then
