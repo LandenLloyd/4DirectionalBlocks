@@ -1,5 +1,7 @@
 CIS 1051 Final Project by Rob Butaev, Landen Lloyd, Kristin Wieland.
 
+Video link: https://temple.zoom.us/rec/play/LnJYpifjNnRgogO_A2__T2h0rR1EowEo3yO9CtBAlb26IqdPqwsfwwEQW5M8Nmc1IvgLXqujaW6l_RRe.VLOwK7IxnxecyW5k?startTime=1607394546000
+
 Problems:
 1. Lua Scope:
   We were experiencing nonsensical errors, like the arrow keys moving the tetrimino. We unknowingly put all our variables in the global scope, causing the different classes to override eachother. We solved this using classes and the self keyword.
