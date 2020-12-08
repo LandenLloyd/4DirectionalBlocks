@@ -79,6 +79,36 @@ function Util:adjacentElements(table1, table2)
 
         if key + self.VIRTUAL_WIDTH * self.BLOCK_DIMENSION > maxCoord then down = key else down = key + self.VIRTUAL_WIDTH * self.BLOCK_DIMENSION end
         if otherTable[down] ~= nil then return true end
+
+        -- Diagonals
+        if key - self.BLOCK_DIMENSION - self.VIRTUAL_WIDTH * self.BLOCK_DIMENSION < minCoord then
+            upleft = key
+        else
+            upleft = key - self.BLOCK_DIMENSION - self.VIRTUAL_WIDTH * self.BLOCK_DIMENSION
+        end
+        if otherTable[upleft] ~= nil then return true end
+
+        if key + self.BLOCK_DIMENSION - self.VIRTUAL_WIDTH * self.BLOCK_DIMENSION < minCoord then
+            upright = key
+        else
+            upright = key + self.BLOCK_DIMENSION - self.VIRTUAL_WIDTH * self.BLOCK_DIMENSION
+        end
+        if otherTable[upright] ~= nil then return true end
+
+        if key - self.BLOCK_DIMENSION + self.VIRTUAL_WIDTH * self.BLOCK_DIMENSION > maxCoord then
+            downleft = key
+        else
+            downleft = key - self.BLOCK_DIMENSION + self.VIRTUAL_WIDTH * self.BLOCK_DIMENSION
+        end
+        if otherTable[downleft] ~= nil then return true end
+
+        if key + self.BLOCK_DIMENSION + self.VIRTUAL_WIDTH * self.BLOCK_DIMENSION > maxCoord then
+            downright = key
+        else
+            downright = key + self.BLOCK_DIMENSION + self.VIRTUAL_WIDTH * self.BLOCK_DIMENSION
+        end
+        if otherTable[downright] ~= nil then return true end
+
     end
 
     -- If we make it past the for loop then no adjacencies detected
